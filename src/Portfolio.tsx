@@ -141,7 +141,7 @@ export default function Portfolio() {
 
         {/* Footer */}
         <footer className="py-12 text-center text-neutral-500 border-t border-white/5 mt-20">
-          <p>© 2026 SW Tech Solution by Aditya. IIT Bombay Engineer.</p>
+          <p>ï¿½ 2026 SW Tech Solution by Aditya. IIT Bombay Engineer.</p>
         </footer>
       </div>
     </div>
