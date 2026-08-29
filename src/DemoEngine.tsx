@@ -120,3 +120,5 @@ export default function DemoEngine() {
     </div>
   );
 }
+
+// UTF8 fix

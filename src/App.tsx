@@ -22,3 +22,5 @@ function App() {
 }
 
 export default App;
+
+// Force commit to fix encoding

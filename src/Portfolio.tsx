@@ -147,3 +147,5 @@ export default function Portfolio() {
     </div>
   );
 }
+
+// UTF8 fix
