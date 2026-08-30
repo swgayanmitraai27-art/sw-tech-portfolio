@@ -2,15 +2,62 @@ import { niches } from '@/data/niches';
 import { notFound } from 'next/navigation';
 import * as React from 'react';
 
+// Education
+import CoachingWidget from '../components/education/CoachingWidget';
+import SchoolWidget from '../components/education/SchoolWidget';
+import ComputerTrainingWidget from '../components/education/ComputerTrainingWidget';
+import IITJEEWidget from '../components/education/IITJEEWidget';
+import NEETWidget from '../components/education/NEETWidget';
+import SpokenEnglishWidget from '../components/education/SpokenEnglishWidget';
+import CompetitiveExamsWidget from '../components/education/CompetitiveExamsWidget';
+
+// Hospitality
+import RestaurantWidget from '../components/hospitality/RestaurantWidget';
+import CafeWidget from '../components/hospitality/CafeWidget';
+import HotelWidget from '../components/hospitality/HotelWidget';
+import BanquetWidget from '../components/hospitality/BanquetWidget';
+import BakeryWidget from '../components/hospitality/BakeryWidget';
+import CloudKitchenWidget from '../components/hospitality/CloudKitchenWidget';
+import SweetShopWidget from '../components/hospitality/SweetShopWidget';
+import FamilyRestaurantWidget from '../components/hospitality/FamilyRestaurantWidget';
+
+// Retail
+import JewelryWidget from '../components/retail/JewelryWidget';
+import BoutiqueWidget from '../components/retail/BoutiqueWidget';
+
 export default async function NicheHome(props: { params: Promise<{ niche: string }> }) {
   const { niche } = await props.params;
   const data = niches[niche];
   if (!data) return notFound();
 
+  // Helper to render the specific widget
+  const renderWidget = () => {
+    switch (niche) {
+      case 'coaching': return <CoachingWidget />;
+      case 'schools': return <SchoolWidget />;
+      case 'computer-training': return <ComputerTrainingWidget />;
+      case 'iit-jee': return <IITJEEWidget />;
+      case 'neet': return <NEETWidget />;
+      case 'spoken-english': return <SpokenEnglishWidget />;
+      case 'competitive-exams': return <CompetitiveExamsWidget />;
+      case 'restaurant': return <RestaurantWidget />;
+      case 'cafe': return <CafeWidget />;
+      case 'hotel': return <HotelWidget />;
+      case 'banquet': return <BanquetWidget />;
+      case 'bakery': return <BakeryWidget />;
+      case 'cloud-kitchen': return <CloudKitchenWidget />;
+      case 'sweet-shop': return <SweetShopWidget />;
+      case 'family-restaurant': return <FamilyRestaurantWidget />;
+      case 'jewelry': return <JewelryWidget />;
+      case 'boutique': return <BoutiqueWidget />;
+      default: return null;
+    }
+  };
+
   return (
     <main className="relative min-h-screen bg-slate-950 text-slate-100 overflow-hidden">
       {/* Media Hero Layer */}
-      <section className="relative h-screen flex items-center justify-center">
+      <section className="relative h-[80vh] flex items-center justify-center">
         <div className="absolute inset-0 z-0">
           {data.isVideo ? (
             <video autoPlay loop muted playsInline className="w-full h-full object-cover pointer-events-none opacity-40 mix-blend-screen" src={data.mediaSrc} />
@@ -31,40 +78,19 @@ export default async function NicheHome(props: { params: Promise<{ niche: string
             <p className="text-xl text-slate-300 font-light max-w-xl leading-relaxed">
               Experience the next generation of {data.name.toLowerCase()} management and booking. A seamless, high-end digital presence built for conversion.
             </p>
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <a href={`/templates/${niche}/contact`} className="px-8 py-4 rounded-xl bg-white text-slate-950 font-bold hover:bg-slate-200 transition-all duration-300 transform hover:scale-105 shadow-2xl">
-                Initialize Build
-              </a>
-              <a href="#features" className="px-8 py-4 rounded-xl border border-white/20 text-white font-medium hover:bg-white/10 transition-all duration-300 backdrop-blur-md">
-                View Custom Modules
-              </a>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Dynamic Features Engine */}
-      <section id="features" className="relative z-10 py-32 bg-slate-950 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Built Exclusively for {data.name}</h2>
-            <p className="text-slate-400 max-w-2xl mx-auto text-lg">We don't use generic templates. Every component is engineered specifically for the operational workflow of your industry.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {data.features && data.features.map((feat: any, idx: number) => (
-              <div key={idx} className="group relative bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl p-10 hover:bg-slate-900 transition-colors">
-                <div className={`absolute top-0 right-0 w-64 h-64 bg-${data.accent}/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-${data.accent}/10 transition-colors`} />
-                <div className="relative z-10">
-                  <div className={`w-14 h-14 rounded-2xl bg-${data.accent}/10 border border-${data.accent}/20 flex items-center justify-center mb-8`}>
-                    <div className={`w-6 h-6 rounded-full bg-${data.accent}`} />
-                  </div>
-                  <h3 className="text-3xl font-bold text-white mb-4">{feat.title}</h3>
-                  <p className="text-slate-400 text-lg leading-relaxed">{feat.desc}</p>
-                </div>
+      {/* DYNAMIC WIDGET INJECTION */}
+      <section className="relative z-20 -mt-20 px-6 max-w-7xl mx-auto mb-32">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl backdrop-blur-xl">
+            {renderWidget() || (
+              <div className="py-20 text-center">
+                <h2 className="text-3xl font-bold text-slate-300">Custom Module Loading...</h2>
+                <p className="text-slate-500 mt-4">This niche is currently using a standard layout.</p>
               </div>
-            ))}
-          </div>
+            )}
         </div>
       </section>
 
