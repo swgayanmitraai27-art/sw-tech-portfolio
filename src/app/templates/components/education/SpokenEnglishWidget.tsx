@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Play, Pause, Volume2, SkipForward, SkipBack, Settings, BookOpen, Mic, Award, MessageCircle, BarChart2 } from 'lucide-react';
@@ -166,7 +167,7 @@ export default function SpokenEnglishWidget() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
                     <h3 className="text-xl font-bold mb-1">Business Negotiation Strategies</h3>
-                    <p className="text-sm text-slate-400">Module 4 • Vocabulary & Idioms</p>
+                    <p className="text-sm text-slate-400">Module 4 ??? Vocabulary & Idioms</p>
                   </div>
                 </div>
 

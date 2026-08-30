@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Calendar, Clock, ChevronRight, Stethoscope, Microscope, Brain, CheckCircle2 } from 'lucide-react';

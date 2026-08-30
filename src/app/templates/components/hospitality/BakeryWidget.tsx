@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -32,7 +33,7 @@ const BakeryWidget = () => {
           transition={{ duration: 1 }}
           className="relative z-10 text-center text-white p-8"
         >
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-4">La Pâtisserie</h1>
+          <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-4">La P??tisserie</h1>
           <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto">Artisanal cakes, crafted with passion and precision.</p>
         </motion.div>
       </section>
@@ -115,7 +116,7 @@ const BakeryWidget = () => {
 
       {/* Footer / Widget 3 */}
       <footer className="py-12 text-center text-slate-500 bg-slate-950">
-        <p>&copy; 2026 La Pâtisserie. All rights reserved.</p>
+        <p>&copy; 2026 La P??tisserie. All rights reserved.</p>
       </footer>
     </div>
   );

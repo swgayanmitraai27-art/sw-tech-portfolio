@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, ChevronRight, X, Plus, Minus, Send, Star, Clock, MapPin, ChefHat, Utensils, GlassWater } from 'lucide-react';
@@ -9,7 +10,7 @@ const MENU_ITEMS = [
   { id: '2', category: 'Tasting Menu', name: 'Wagyu A5 Striploin', description: 'Charcoal grilled wagyu, black garlic puree, seasonal mushrooms', price: 350, image: 'https://images.pexels.com/photos/3763847/pexels-photo-3763847.jpeg' },
   { id: '3', category: 'A La Carte', name: 'Lobster Thermidor', description: 'Wild caught lobster, cognac cream, gruyere crust', price: 180, image: 'https://images.pexels.com/photos/5631110/pexels-photo-5631110.jpeg' },
   { id: '4', category: 'A La Carte', name: 'Foie Gras Terrine', description: 'Duck liver, fig compote, brioche toast', price: 120, image: 'https://images.pexels.com/photos/12396113/pexels-photo-12396113.jpeg' },
-  { id: '5', category: 'Wine Pairing', name: 'Château Margaux 2015', description: 'Bordeaux blend, France', price: 850, image: 'https://images.pexels.com/photos/2912163/pexels-photo-2912163.jpeg' },
+  { id: '5', category: 'Wine Pairing', name: 'Ch??teau Margaux 2015', description: 'Bordeaux blend, France', price: 850, image: 'https://images.pexels.com/photos/2912163/pexels-photo-2912163.jpeg' },
   { id: '6', category: 'Desserts', name: 'Valrhona Chocolate Sphere', description: 'Dark chocolate, hazelnut praline, gold dust', price: 85, image: 'https://images.pexels.com/photos/3338681/pexels-photo-3338681.jpeg' }
 ];
 

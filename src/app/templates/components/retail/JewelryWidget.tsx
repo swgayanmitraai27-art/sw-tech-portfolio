@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Calendar, ChevronRight, Clock, MapPin, Diamond } from 'lucide-react';
@@ -42,7 +43,7 @@ export default function JewelryWidget() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
           >
-            <h2 className="text-amber-500 tracking-[0.3em] uppercase text-sm font-semibold mb-4">Maison de l'Éternité</h2>
+            <h2 className="text-amber-500 tracking-[0.3em] uppercase text-sm font-semibold mb-4">Maison de l'??ternit??</h2>
             <h1 className="text-5xl md:text-8xl font-serif font-light text-white drop-shadow-2xl mb-6">
               A Symphony of <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200">Light & Form</span>
             </h1>
@@ -82,7 +83,7 @@ export default function JewelryWidget() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-500" />
                 <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                   <div>
-                    <h3 className="text-2xl font-serif text-white mb-2">L'Étoile du Soir</h3>
+                    <h3 className="text-2xl font-serif text-white mb-2">L'??toile du Soir</h3>
                     <p className="text-amber-500/80 font-light tracking-wider uppercase text-sm">View Details</p>
                   </div>
                   <button className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-amber-500 hover:border-amber-500 transition-colors">
@@ -145,7 +146,7 @@ export default function JewelryWidget() {
                 </div>
                 <div>
                   <h4 className="text-white text-lg font-serif">Flagship Salon</h4>
-                  <p className="text-slate-500">123 Avenue des Champs-Élysées, Paris</p>
+                  <p className="text-slate-500">123 Avenue des Champs-??lys??es, Paris</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -154,7 +155,7 @@ export default function JewelryWidget() {
                 </div>
                 <div>
                   <h4 className="text-white text-lg font-serif">Private Hours</h4>
-                  <p className="text-slate-500">By appointment, 10:00 AM – 8:00 PM</p>
+                  <p className="text-slate-500">By appointment, 10:00 AM ??? 8:00 PM</p>
                 </div>
               </div>
             </div>
@@ -212,7 +213,7 @@ export default function JewelryWidget() {
       <footer className="bg-slate-950 py-12 border-t border-slate-900 text-center">
         <Diamond className="w-6 h-6 text-slate-700 mx-auto mb-6" />
         <p className="text-slate-600 font-light text-sm">
-          &copy; {new Date().getFullYear()} Maison de l'Éternité. All rights reserved. <br/>
+          &copy; {new Date().getFullYear()} Maison de l'??ternit??. All rights reserved. <br/>
           Designed for the extraordinary.
         </p>
       </footer>

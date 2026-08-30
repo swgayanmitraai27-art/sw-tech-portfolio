@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, ChevronRight, Gift, Star, Clock, Heart } from 'lucide-react';
@@ -151,7 +152,7 @@ export default function SweetShopWidget() {
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
                             hamperItems.includes(item.id) ? 'bg-amber-400 border-amber-400 text-slate-900' : 'border-white/50 text-white'
                           }`}>
-                            {hamperItems.includes(item.id) ? '✓' : '+'}
+                            {hamperItems.includes(item.id) ? '???' : '+'}
                           </div>
                         </div>
                       </div>
@@ -205,7 +206,7 @@ export default function SweetShopWidget() {
                               onClick={() => toggleHamperItem(id)}
                               className="text-slate-400 hover:text-red-500 transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-50"
                             >
-                              ✕
+                              ???
                             </button>
                           </motion.div>
                         );

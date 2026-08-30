@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Upload, ChevronRight, ChevronLeft, BookOpen, Users, Calendar, Award, Bell, Search, Menu } from 'lucide-react';
@@ -148,7 +149,7 @@ export default function SchoolWidget() {
                       <div className="text-sm font-bold text-slate-600 w-16 pt-1">09:00</div>
                       <div>
                         <div className="font-semibold text-slate-900">AP Physics C</div>
-                        <div className="text-sm text-slate-500">Room 302 • 28 Students</div>
+                        <div className="text-sm text-slate-500">Room 302 ??? 28 Students</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-4 p-3 rounded-lg border-l-4 border-slate-200 hover:bg-slate-50 transition-colors">
@@ -260,7 +261,7 @@ export default function SchoolWidget() {
                     </div>
                     <div>
                       <div className="text-sm font-semibold text-slate-900">previous_school_transcript.pdf</div>
-                      <div className="text-xs text-slate-500">2.4 MB • Uploaded complete</div>
+                      <div className="text-xs text-slate-500">2.4 MB ??? Uploaded complete</div>
                     </div>
                   </div>
                   <button className="text-slate-400 hover:text-red-500">Remove</button>

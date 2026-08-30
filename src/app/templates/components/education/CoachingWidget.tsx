@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -319,7 +320,7 @@ export default function CoachingWidget() {
 
       {/* Footer minimal */}
       <footer className="py-8 bg-slate-950 border-t border-slate-900 text-center">
-        <p className="text-slate-500 text-sm">© 2026 Academic Excellence Institute. All rights reserved.</p>
+        <p className="text-slate-500 text-sm">?? 2026 Academic Excellence Institute. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -160,7 +161,7 @@ export default function CafeWidget() {
               </button>
             </div>
          </div>
-         <p className="mt-24 text-slate-700 text-sm">© 2026 Aesthetic Barista. Void where prohibited.</p>
+         <p className="mt-24 text-slate-700 text-sm">?? 2026 Aesthetic Barista. Void where prohibited.</p>
       </section>
 
     </div>
