@@ -1,41 +1,41 @@
 {
-    "name":  "sw-tech-portfolio",
-    "private":  true,
-    "version":  "0.0.0",
-    "type":  "module",
-    "scripts":  {
-                    "dev":  "next dev",
-                    "next-build":  "next build",
-                    "build":  "opennextjs-cloudflare build",
-                    "start":  "next start",
-                    "lint":  "next lint",
-                    "deploy":  "opennextjs-cloudflare build \u0026\u0026 opennextjs-cloudflare deploy",
-                    "preview":  "opennextjs-cloudflare build \u0026\u0026 opennextjs-cloudflare preview"
-                },
-    "dependencies":  {
-                         "@radix-ui/react-accordion":  "^1.2.1",
-                         "@radix-ui/react-slot":  "^1.1.0",
-                         "class-variance-authority":  "^0.7.0",
-                         "clsx":  "^2.1.1",
-                         "framer-motion":  "^11.11.11",
-                         "lucide-react":  "^0.454.0",
-                         "next":  "16.3.3",
-                         "react":  "^19.0.0",
-                         "react-dom":  "^19.0.0",
-                         "tailwind-merge":  "^2.5.4",
-                         "tailwindcss-animate":  "^1.0.7"
-                     },
-    "devDependencies":  {
-                            "@opennextjs/cloudflare":  "^1.20.4",
-                            "@types/node":  "^20",
-                            "@types/react":  "^19",
-                            "@types/react-dom":  "^19",
-                            "eslint":  "^9",
-                            "eslint-config-next":  "16.3.3",
-                            "postcss":  "^8.5.1",
-                            "tailwindcss":  "^4.0.3",
-                            "typescript":  "^5",
-                            "esbuild":  "^0.24.0",
-                            "@tailwindcss/postcss":  "^4.0.0"
-                        }
+    "name": "sw-tech-portfolio",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "next dev",
+        "next-build": "next build",
+        "build": "opennextjs-cloudflare build",
+        "start": "next start",
+        "lint": "next lint",
+        "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+        "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview"
+    },
+    "dependencies": {
+        "@radix-ui/react-accordion": "^1.2.1",
+        "@radix-ui/react-slot": "^1.1.0",
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.1",
+        "framer-motion": "^11.11.11",
+        "lucide-react": "^0.454.0",
+        "next": "16.3.3",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "tailwind-merge": "^2.5.4",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "devDependencies": {
+        "@opennextjs/cloudflare": "^1.20.4",
+        "@tailwindcss/postcss": "^4.3.3",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "esbuild": "^0.24.0",
+        "eslint": "^9",
+        "eslint-config-next": "16.3.3",
+        "postcss": "^8.5.1",
+        "tailwindcss": "^4.0.3",
+        "typescript": "^5"
+    }
 }
