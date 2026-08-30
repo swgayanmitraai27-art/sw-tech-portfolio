@@ -1,4 +1,4 @@
-export default {
+﻿export default {
   default: {
     override: {
       wrapper: "cloudflare-node",
@@ -9,7 +9,7 @@ export default {
       queue: "dummy",
     },
   },
-  buildCommand: "npx next build",
+  buildCommand: "npm run next-build",
   edgeExternals: ["node:crypto"],
   middleware: {
     external: true,

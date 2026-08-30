@@ -1,43 +1,44 @@
-{
-  "name": "sw-tech-portfolio",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "next dev",
-    "build": "opennextjs-cloudflare build",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@react-three/drei": "^10.7.8",
-    "@react-three/fiber": "^9.7.0",
-    "@studio-freight/lenis": "^1.0.42",
-    "@tailwindcss/postcss": "^4.3.3",
-    "@tailwindcss/vite": "^4.3.3",
-    "clsx": "^2.1.1",
-    "framer-motion": "^13.1.1",
-    "lucide-react": "^1.37.0",
-    "next": "^16.3.3",
-    "postcss": "^8.5.26",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.3",
-    "tailwind-merge": "^3.6.0",
-    "tailwindcss": "^4.3.3",
-    "three": "^0.185.1"
-  },
-  "devDependencies": {
-    "@opennextjs/cloudflare": "^1.20.4",
-    "@types/node": "^24.13.3",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
-    "@vitejs/plugin-react": "^6.1.0",
-    "esbuild": "^0.25.4",
-    "oxlint": "^1.79.0",
-    "typescript": "~6.0.2",
-    "vite": "^8.2.2"
-  }
+﻿{
+    "name":  "sw-tech-portfolio",
+    "private":  true,
+    "version":  "0.0.0",
+    "type":  "module",
+    "scripts":  {
+                    "dev":  "next dev",
+                    "build":  "opennextjs-cloudflare build",
+                    "deploy":  "opennextjs-cloudflare build \u0026\u0026 opennextjs-cloudflare deploy",
+                    "preview":  "opennextjs-cloudflare build \u0026\u0026 opennextjs-cloudflare preview",
+                    "start":  "next start",
+                    "lint":  "next lint",
+                    "next-build":  "next build"
+                },
+    "dependencies":  {
+                         "@react-three/drei":  "^10.7.8",
+                         "@react-three/fiber":  "^9.7.0",
+                         "@studio-freight/lenis":  "^1.0.42",
+                         "@tailwindcss/postcss":  "^4.3.3",
+                         "@tailwindcss/vite":  "^4.3.3",
+                         "clsx":  "^2.1.1",
+                         "framer-motion":  "^13.1.1",
+                         "lucide-react":  "^1.37.0",
+                         "next":  "^16.3.3",
+                         "postcss":  "^8.5.26",
+                         "react":  "^19.2.8",
+                         "react-dom":  "^19.2.8",
+                         "react-router-dom":  "^7.18.3",
+                         "tailwind-merge":  "^3.6.0",
+                         "tailwindcss":  "^4.3.3",
+                         "three":  "^0.185.1"
+                     },
+    "devDependencies":  {
+                            "@opennextjs/cloudflare":  "^1.20.4",
+                            "@types/node":  "^24.13.3",
+                            "@types/react":  "^19.2.18",
+                            "@types/react-dom":  "^19.2.4",
+                            "@vitejs/plugin-react":  "^6.1.0",
+                            "esbuild":  "^0.25.4",
+                            "oxlint":  "^1.79.0",
+                            "typescript":  "~6.0.2",
+                            "vite":  "^8.2.2"
+                        }
 }
