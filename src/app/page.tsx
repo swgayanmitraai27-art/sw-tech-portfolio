@@ -35,21 +35,21 @@ const metrics = [
 const categories = [
   { id: 1, name: 'Restaurants & Cafes', icon: Utensils, route: '/templates/restaurant', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800', mockFeature: 'WhatsApp Ordering System' },
   { id: 2, name: 'Bakeries & Cake Shops', icon: Cake, route: '/templates/bakery', image: 'https://images.unsplash.com/photo-1551024506-0cb4a1cb1c26?auto=format&fit=crop&q=80&w=800', mockFeature: 'Custom Cake Builder' },
-  { id: 3, name: 'Fitness Gyms', icon: Dumbbell, route: '#', image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800', mockFeature: 'Class Scheduling & Memberships' },
-  { id: 4, name: 'Hair Salons & Spas', icon: Scissors, route: '#', image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=800', mockFeature: 'Appointment Booking' },
-  { id: 5, name: 'Local Kirana', icon: ShoppingCart, route: '#', image: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&q=80&w=800', mockFeature: 'Same-day Delivery Cart' },
-  { id: 6, name: 'Tuition Classes', icon: BookOpen, route: '#', image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800', mockFeature: 'Video Course Portal' },
-  { id: 7, name: 'Doctors & Clinics', icon: Stethoscope, route: '#', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800', mockFeature: 'Tele-consultation' },
-  { id: 8, name: 'Real Estate', icon: Building, route: '#', image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800', mockFeature: 'Virtual 3D Tours' },
-  { id: 9, name: 'Hardware Shops', icon: Hammer, route: '#', image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&q=80&w=800', mockFeature: 'Bulk Order Quotation' },
-  { id: 10, name: 'Boutiques', icon: Shirt, route: '#', image: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=800', mockFeature: 'Lookbook Gallery' },
-  { id: 11, name: 'Automobile', icon: Car, route: '#', image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=800', mockFeature: 'Test Drive Booking' },
-  { id: 12, name: 'Photography', icon: Camera, route: '#', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800', mockFeature: 'Client Portfolio Access' },
-  { id: 13, name: 'Wedding Lawns', icon: Tent, route: '#', image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800', mockFeature: 'Event Date Availability' },
-  { id: 14, name: 'Electronics Repair', icon: Wrench, route: '#', image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&q=80&w=800', mockFeature: 'Repair Status Tracker' },
-  { id: 15, name: 'Legal/CA', icon: Scale, route: '#', image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800', mockFeature: 'Document Vault' },
-  { id: 16, name: 'Hotels', icon: Hotel, route: '#', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800', mockFeature: 'Room Reservation Engine' },
-  { id: 17, name: 'Packers & Movers', icon: Truck, route: '#', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800', mockFeature: 'Instant Cost Estimator' }
+  { id: 3, name: 'Fitness Gyms', icon: Dumbbell, route: '/templates/gym', image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800', mockFeature: 'Class Scheduling & Memberships' },
+  { id: 4, name: 'Hair Salons & Spas', icon: Scissors, route: '/templates/salon', image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=800', mockFeature: 'Appointment Booking' },
+  { id: 5, name: 'Local Kirana', icon: ShoppingCart, route: '/templates/kirana', image: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&q=80&w=800', mockFeature: 'Same-day Delivery Cart' },
+  { id: 6, name: 'Tuition Classes', icon: BookOpen, route: '/templates/coaching', image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800', mockFeature: 'Video Course Portal' },
+  { id: 7, name: 'Doctors & Clinics', icon: Stethoscope, route: '/templates/doctor', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800', mockFeature: 'Tele-consultation' },
+  { id: 8, name: 'Real Estate', icon: Building, route: '/templates/realestate', image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800', mockFeature: 'Virtual 3D Tours' },
+  { id: 9, name: 'Hardware Shops', icon: Hammer, route: '/templates/hardware', image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&q=80&w=800', mockFeature: 'Bulk Order Quotation' },
+  { id: 10, name: 'Boutiques', icon: Shirt, route: '/templates/boutique', image: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=800', mockFeature: 'Lookbook Gallery' },
+  { id: 11, name: 'Automobile', icon: Car, route: '/templates/automobile', image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=800', mockFeature: 'Test Drive Booking' },
+  { id: 12, name: 'Photography', icon: Camera, route: '/templates/photography', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800', mockFeature: 'Client Portfolio Access' },
+  { id: 13, name: 'Wedding Lawns', icon: Tent, route: '/templates/banquet', image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800', mockFeature: 'Event Date Availability' },
+  { id: 14, name: 'Electronics Repair', icon: Wrench, route: '/templates/repair', image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&q=80&w=800', mockFeature: 'Repair Status Tracker' },
+  { id: 15, name: 'Legal/CA', icon: Scale, route: '/templates/legal', image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800', mockFeature: 'Document Vault' },
+  { id: 16, name: 'Hotels', icon: Hotel, route: '/templates/hotel', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800', mockFeature: 'Room Reservation Engine' },
+  { id: 17, name: 'Packers & Movers', icon: Truck, route: '/templates/packers', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800', mockFeature: 'Instant Cost Estimator' }
 ];
 
 export default function Home() {
