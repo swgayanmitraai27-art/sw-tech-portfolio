@@ -8,13 +8,14 @@ import {
   BookOpen, Stethoscope, Building, Hammer, Shirt,
   Car, Camera, Tent, Wrench, Scale, Hotel, Truck,
   Code2, Database, Globe, Layers, Server, Cpu, CheckCircle2,
-  Phone, MessageSquare, Zap, Target, CreditCard, Bot, Cloud
+  Phone, MessageSquare, Zap, Target, CreditCard, Bot, Cloud, Smartphone
 } from 'lucide-react';
 
 const frameworks = [
   { name: 'Next.js & React', icon: Globe },
   { name: 'Node.js & Express', icon: Server },
   { name: 'TypeScript & Python', icon: Code2 },
+  { name: 'iOS & Android App Dev', icon: Smartphone },
   { name: 'Payment Gateways', icon: CreditCard },
   { name: 'AI Servers & LLMs', icon: Bot },
   { name: 'VPS & Cloud Hosting', icon: Cloud },
@@ -25,8 +26,8 @@ const frameworks = [
 ];
 
 const metrics = [
-  { value: '150+', label: 'Custom Web Solutions Successfully Delivered' },
-  { value: '5+ Years', label: 'of Industry-Grade Production Experience' },
+  { value: '100+', label: 'Specialized AI Agents Ready to Handle Your Operations' },
+  { value: '150+', label: 'Custom Web & App Solutions Successfully Delivered' },
   { value: '24-Hour', label: 'Express Development Time Guarantee' },
   { value: '100%', label: 'Mobile Responsive Optimization Rating' }
 ];
@@ -83,10 +84,10 @@ export default function Home() {
             
             <div className="max-w-4xl mx-auto bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 mb-12 shadow-2xl">
               <p className="text-xl md:text-2xl text-slate-300 font-light leading-relaxed mb-6">
-                <strong className="text-white font-medium">Full-Stack Software Architecture</strong> + <strong className="text-white font-medium">Automated Lead Scraping</strong> + <strong className="text-white font-medium">Payment Integration</strong> + <strong className="text-white font-medium">VPS & AI Servers</strong>
+                <strong className="text-white font-medium">Full-Stack Software & App Architecture</strong> + <strong className="text-white font-medium">100+ AI Agents Workforce</strong> + <strong className="text-white font-medium">Automated Lead Scraping</strong> + <strong className="text-white font-medium">VPS Servers</strong>
               </p>
               <p className="text-slate-400 text-lg">
-                We handle everything from scratch infrastructure scripting, VPS deployment, AI LLM configurations, Razorpay/Stripe integrations, to premium UI rendering without external outsourcing dependencies. Absolute vertical integration for your business.
+                We handle everything from App Development, scratch infrastructure scripting, VPS deployment, AI LLM configurations, Razorpay/Stripe integrations, to premium UI rendering. Our fleet of <strong className="text-white">100+ AI Agents</strong> is ready to handle and automate your entire operational workflow.
               </p>
             </div>
           </motion.div>
@@ -122,7 +123,7 @@ export default function Home() {
             <p className="text-slate-400 max-w-2xl mx-auto">Advanced technical frameworks executed with absolute precision and mastery.</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {frameworks.map((fw, idx) => (
               <motion.div
                 key={idx}
@@ -130,7 +131,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.05 }}
-                className="group relative"
+                className="group relative w-48"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl blur opacity-0 group-hover:opacity-30 transition-opacity duration-300" />
                 <div className="relative h-full flex flex-col items-center justify-center p-6 bg-slate-900/80 border border-slate-800 rounded-xl hover:border-blue-500/50 transition-colors backdrop-blur-sm">
@@ -263,7 +264,7 @@ export default function Home() {
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Mission Requirements</label>
-                    <textarea rows={3} className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors resize-none" placeholder="Detail your project objectives..." />
+                    <textarea rows="3" className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors resize-none" placeholder="Detail your project objectives..." />
                   </div>
                   <button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/25 transition-all active:scale-[0.98]">
                     Deploy Request Sequence
