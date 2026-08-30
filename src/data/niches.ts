@@ -1,4 +1,4 @@
-﻿export const niches: Record<string, any> = {
+export const niches: Record<string, any> = {
   coaching: { id: 'coaching', name: 'Coaching Institutes', tagline: 'Master Your Future', isVideo: true, mediaSrc: 'https://videos.pexels.com/video-files/3195394/3195394-uhd_2560_1440_25fps.mp4', accent: 'blue-500' },
   schools: { id: 'schools', name: 'Private Schools', tagline: 'Excellence in Education', isVideo: false, mediaSrc: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=2560', accent: 'emerald-500' },
   'computer-training': { id: 'computer-training', name: 'Computer Training Institutes', tagline: 'Code Your Destiny', isVideo: true, mediaSrc: 'https://videos.pexels.com/video-files/5377684/5377684-uhd_2560_1440_25fps.mp4', accent: 'cyan-400' },
