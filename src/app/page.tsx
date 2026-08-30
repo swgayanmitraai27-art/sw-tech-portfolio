@@ -221,7 +221,7 @@ export default function Home() {
                 <p className="text-slate-400 text-lg mb-8">Deploy state-of-the-art infrastructure for your business in under 24 hours.</p>
                 
                 <div className="space-y-4">
-                  <a href="https://wa.me/1234567890" target="_blank" rel="noreferrer" className="flex items-center space-x-4 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 p-4 rounded-2xl transition-colors group">
+                  <a href="https://wa.me/918303994616?text=Hello%20Team!%20I%20want%20to%20deploy%20a%20new%20project%20using%20your%20AI%20Agency." target="_blank" rel="noreferrer" className="flex items-center space-x-4 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 p-4 rounded-2xl transition-colors group">
                     <div className="bg-green-500 p-3 rounded-xl text-white group-hover:scale-110 transition-transform">
                       <MessageSquare className="w-6 h-6" />
                     </div>
@@ -231,7 +231,7 @@ export default function Home() {
                     </div>
                   </a>
                   
-                  <a href="tel:+1234567890" className="flex items-center space-x-4 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 p-4 rounded-2xl transition-colors group">
+                  <a href="tel:+918303994616" className="flex items-center space-x-4 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 p-4 rounded-2xl transition-colors group">
                     <div className="bg-blue-500 p-3 rounded-xl text-white group-hover:scale-110 transition-transform">
                       <Phone className="w-6 h-6" />
                     </div>
