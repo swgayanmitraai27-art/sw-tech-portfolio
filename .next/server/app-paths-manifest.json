@@ -1,0 +1,10 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/templates/[niche]/about/page": "app/templates/[niche]/about/page.js",
+  "/templates/[niche]/contact/page": "app/templates/[niche]/contact/page.js",
+  "/templates/[niche]/gallery/page": "app/templates/[niche]/gallery/page.js",
+  "/templates/[niche]/page": "app/templates/[niche]/page.js",
+  "/templates/[niche]/services/page": "app/templates/[niche]/services/page.js"
+}
