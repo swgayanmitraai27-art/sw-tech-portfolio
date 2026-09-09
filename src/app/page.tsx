@@ -7,7 +7,7 @@ import {
   Utensils, Cake, BookOpen, Shirt, Tent, Hotel, Code2, Database, Globe, Layers, Server, Cpu, CheckCircle2,
   Phone, MessageSquare, Target, CreditCard, Bot, Cloud, Smartphone,
   Coffee, GraduationCap, Library, Gem, Users, Gift, Stethoscope, 
-  Car, ShoppingBag, Truck, Zap, Activity, ShieldCheck, Check, ArrowRight
+  Car, ShoppingBag, Truck, Zap, Activity, ShieldCheck, Check, ArrowRight, MapPin
 } from 'lucide-react';
 
 const categories = [
@@ -227,7 +227,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. ADDITIONAL CAPABILITIES & TECH STACK (MERGED FOR COMPACTNESS) */}
+        {/* 3. ADDITIONAL CAPABILITIES & TECH STACK */}
         <section className="py-32 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-20">
@@ -271,6 +271,53 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* FOOTER - AGENCY INFO */}
+        <footer className="bg-slate-950 border-t border-slate-800 py-16 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 mb-2">
+                  SW TECH SOLUTION
+                </h2>
+                <p className="text-slate-400 text-lg mb-8">Engineering Digital Empires.</p>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-4">
+                    <MapPin className="text-orange-500 mt-1 shrink-0" />
+                    <div>
+                      <p className="text-slate-300 font-medium text-lg">Office Location:</p>
+                      <p className="text-slate-400 leading-relaxed">
+                        Garima Studio<br />
+                        Neori Bajar, Ramnagar Road<br />
+                        Ambedkarnagar, UP
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <Phone className="text-orange-500 shrink-0" />
+                    <p className="text-slate-300 font-medium text-lg">+91 8303994616</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-slate-900/50 p-8 rounded-3xl border border-white/10 text-center">
+                <h3 className="text-2xl font-bold text-white mb-4">Ready to start your project?</h3>
+                <p className="text-slate-400 mb-8">Visit our office or message us directly on WhatsApp to get a free consultation.</p>
+                <a href="https://wa.me/918303994616?text=Hi%20SW%20Tech%20Solution,%20I%20want%20to%20build%20a%20project." target="_blank" rel="noreferrer" className="inline-flex items-center justify-center space-x-2 w-full bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 rounded-xl font-bold transition-colors">
+                  <MessageSquare size={20} />
+                  <span>Message Us Now</span>
+                </a>
+              </div>
+            </div>
+            
+            <div className="mt-16 pt-8 border-t border-slate-800 text-center flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm">
+              <p>&copy; {new Date().getFullYear()} SW Tech Solution. All rights reserved.</p>
+              <p className="mt-2 md:mt-0">Built with ?? and ??</p>
+            </div>
+          </div>
+        </footer>
 
       </div>
     </main>
