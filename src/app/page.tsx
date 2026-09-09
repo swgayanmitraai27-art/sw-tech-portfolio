@@ -59,7 +59,7 @@ const pricing = [
     title: 'Custom Web App (Full Stack)', 
     price: '?4,499', 
     desc: 'Advanced database-driven web application tailored for businesses & SaaS.',
-    features: ['Free Custom Admin Control Panel', 'Payment Gateway Integration', '1 Year Domain & Cloud Hosting Included', 'Secure Database Integration (MongoDB/SQL)', 'SEO & Google Analytics Setup']
+    features: ['Delivered in 7 Days (With Full Testing)', 'Free Custom Admin Control Panel', 'Payment Gateway Integration', '1 Year Domain & Cloud Hosting Included', 'Secure Database Integration (MongoDB/SQL)']
   },
   { 
     title: 'Android App (Play Store)', 
