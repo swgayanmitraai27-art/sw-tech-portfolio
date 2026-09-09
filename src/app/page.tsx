@@ -113,10 +113,10 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-orange-500/20 blur-[150px] rounded-full pointer-events-none" />
       </div>
 
-      <div className="relative z-10 pt-20">
+      <div className="relative z-10">
         
-        {/* ULTRA-PREMIUM HERO SECTION */}
-        <section className="relative min-h-[85vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center">
+        {/* ULTRA-PREMIUM HERO SECTION (Added top padding so it clears the fixed header) */}
+        <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center pt-32 pb-24">
           <div className="space-y-8 animate-in fade-in zoom-in-95 duration-1000 fill-mode-both max-w-5xl mx-auto">
             <div className="inline-flex items-center px-5 py-2.5 rounded-full border border-orange-500/40 bg-orange-500/10 text-orange-400 text-sm font-bold tracking-widest uppercase backdrop-blur-md shadow-[0_0_30px_rgba(249,115,22,0.2)]">
               <span className="flex h-2.5 w-2.5 rounded-full bg-orange-500 mr-3 animate-pulse"></span>
