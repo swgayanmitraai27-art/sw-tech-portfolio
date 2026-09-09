@@ -44,16 +44,16 @@ const pricing = [
     features: ['1 Year Free Domain (.com/.in)', '1 Year Premium Hosting', '5 Professional Business Emails', '24/7 Dedicated Customer Support', '5-Page Custom Website Built Free']
   },
   { 
-    title: 'Custom Web App', 
+    title: 'Custom Web App (Full Stack)', 
     price: '?4,499', 
-    desc: 'Advanced logic & databases for SaaS & E-Commerce.',
-    features: ['User Authentication & Login', 'Database Integration (MongoDB/SQL)', 'Payment Gateway Integration', 'Admin Control Panel Dashboard']
+    desc: 'Advanced database-driven web application tailored for businesses & SaaS.',
+    features: ['Free Custom Admin Control Panel', 'Payment Gateway Integration', '1 Year Domain & Cloud Hosting Included', 'Secure Database Integration (MongoDB/SQL)', 'SEO & Google Analytics Setup']
   },
   { 
     title: 'Android & iOS App', 
     price: '?9,999', 
-    desc: 'Full-fledged mobile application for Play Store & App Store.',
-    features: ['App Store & Play Store Deployment', 'Real-time Push Notifications', 'Native High-Speed Animations', 'Live Cloud Sync & Data Storage']
+    desc: 'Full-fledged mobile application deployed on Play Store & App Store.',
+    features: ['1 Free Website Included (With Domain & Hosting)', 'App Store & Play Store Deployment', 'Real-time Push Notifications', 'Native High-Speed Animations', 'Live Cloud Sync & Data Storage']
   }
 ];
 
