@@ -34,7 +34,7 @@ const technologies = [
   { name: 'Next.js & React', icon: Globe, color: 'text-blue-400' },
   { name: 'Node.js & Express', icon: Server, color: 'text-green-400' },
   { name: 'TypeScript & Python', icon: Code2, color: 'text-yellow-400' },
-  { name: 'iOS & Android (React Native)', icon: Smartphone, color: 'text-cyan-400' },
+  { name: 'Android (React Native)', icon: Smartphone, color: 'text-cyan-400' },
   { name: 'Stripe & Razorpay Integration', icon: CreditCard, color: 'text-indigo-400' },
   { name: 'Custom AI & LLMs', icon: Bot, color: 'text-purple-400' },
   { name: 'AWS & Cloud Hosting', icon: Cloud, color: 'text-orange-400' },
@@ -42,7 +42,7 @@ const technologies = [
 ];
 
 const capabilities = [
-  { title: 'Mobile Apps (iOS & Android)', desc: 'Native-feel applications for App Store & Play Store.', icon: Smartphone },
+  { title: 'Android Mobile Apps', desc: 'Native-feel applications delivered on Google Play Store.', icon: Smartphone },
   { title: 'E-Commerce Platforms', desc: 'High-conversion multi-vendor & single-brand stores.', icon: ShoppingBag },
   { title: 'Food & Grocery Delivery', desc: 'Swiggy/Zomato style platforms with live tracking.', icon: Utensils },
   { title: 'Ride-Hailing & Logistics', desc: 'Uber-clone taxi apps & fleet management systems.', icon: Car },
@@ -53,7 +53,7 @@ const pricing = [
     title: '5-Page Website (100% FREE)', 
     price: '?1,999', 
     desc: 'You pay ZERO for development. The ?1,999 is only for Server, Hosting, and Domain charges.',
-    features: ['1 Year Free Domain (.com/.in)', '1 Year Premium Hosting', '5 Professional Business Emails', '24/7 Dedicated Customer Support', '5-Page Custom Website Built Free']
+    features: ['Delivered in 24 Hours', '1 Year Free Domain (.com/.in)', '1 Year Premium Hosting', '5 Professional Business Emails', '24/7 Dedicated Customer Support']
   },
   { 
     title: 'Custom Web App (Full Stack)', 
@@ -62,10 +62,10 @@ const pricing = [
     features: ['Free Custom Admin Control Panel', 'Payment Gateway Integration', '1 Year Domain & Cloud Hosting Included', 'Secure Database Integration (MongoDB/SQL)', 'SEO & Google Analytics Setup']
   },
   { 
-    title: 'Android & iOS App', 
+    title: 'Android App (Play Store)', 
     price: '?9,999', 
-    desc: 'Full-fledged mobile application deployed on Play Store & App Store.',
-    features: ['1 Free Website Included (With Domain & Hosting)', 'App Store & Play Store Deployment', 'Real-time Push Notifications', 'Native High-Speed Animations', 'Live Cloud Sync & Data Storage']
+    desc: 'Full-fledged Android mobile application. Note: Client pays $25 Google Play Developer Fee.',
+    features: ['Live in 30 Days (Includes 14-day Google Testing)', '1 Free Website Included (With Domain/Hosting)', 'Live Cloud Sync & Push Notifications', 'Native High-Speed Animations', 'Direct Google Play Store Deployment']
   }
 ];
 
@@ -232,7 +232,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-20">
               <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">Beyond Websites</h2>
-              <p className="text-slate-400 text-xl max-w-2xl mx-auto font-light">We engineer mobile apps, complex databases, AI workflows, and enterprise architectures.</p>
+              <p className="text-slate-400 text-xl max-w-2xl mx-auto font-light">We engineer Android mobile apps, complex databases, AI workflows, and enterprise architectures.</p>
             </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
