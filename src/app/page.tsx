@@ -64,7 +64,7 @@ const pricing = [
   { 
     title: 'Android App (Play Store)', 
     price: '?9,999', 
-    desc: 'Full-fledged Android mobile application. Note: Client pays $25 Google Play Developer Fee.',
+    desc: 'Full-fledged Android mobile application. Publishing is 100% FREE on our Developer Account.',
     features: ['Live in 30 Days (Includes 14-day Google Testing)', '1 Free Website Included (With Domain/Hosting)', 'Live Cloud Sync & Push Notifications', 'Native High-Speed Animations', 'Direct Google Play Store Deployment']
   }
 ];
