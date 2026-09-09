@@ -7,7 +7,7 @@ import {
   Utensils, Cake, BookOpen, Shirt, Tent, Hotel, Code2, Database, Globe, Layers, Server, Cpu, CheckCircle2,
   Phone, MessageSquare, Target, CreditCard, Bot, Cloud, Smartphone,
   Coffee, GraduationCap, Library, Gem, Users, Gift, Stethoscope, 
-  Car, ShoppingBag, Truck, Zap, Activity, ShieldCheck
+  Car, ShoppingBag, Truck, Zap, Activity, ShieldCheck, Check
 } from 'lucide-react';
 
 const technologies = [
@@ -34,6 +34,27 @@ const capabilities = [
   { title: 'SaaS & Custom Dashboards', desc: 'Complex web applications with real-time analytics.', icon: Activity },
   { title: 'FinTech & Payment Tools', desc: 'Custom wallets, subscription billing & gateways.', icon: CreditCard },
   { title: 'Logistics & Supply Chain', desc: 'Warehouse tracking & automated dispatch routes.', icon: Truck },
+];
+
+const pricing = [
+  { 
+    title: '5-Page Website', 
+    price: '?1,999', 
+    desc: 'Perfect for startups & local businesses.',
+    features: ['Premium Bespoke Design', 'Mobile Responsive', 'Contact Form', 'Fast Delivery']
+  },
+  { 
+    title: 'Custom Web App', 
+    price: '?4,499', 
+    desc: 'Advanced logic & databases for SaaS.',
+    features: ['User Authentication', 'Database Integration', 'Payment Gateways', 'Admin Dashboard']
+  },
+  { 
+    title: 'Android & iOS App', 
+    price: '?9,999', 
+    desc: 'Full-fledged mobile application.',
+    features: ['App Store Deployment', 'Push Notifications', 'Native Animations', 'Cloud Sync']
+  }
 ];
 
 const categories = [
@@ -146,8 +167,57 @@ export default function Home() {
           </div>
         </section>
 
-        {/* TECH STACK SECTION */}
+        {/* PRICING SECTION */}
         <section className="py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-4">Transparent Pricing</h2>
+              <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+                No hidden fees. Premium architectures accessible for everyone. 
+                <br className="hidden md:block"/> <span className="text-orange-400 font-medium">Note: Prices may increase depending on your specific custom requirements.</span>
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {pricing.map((plan, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  className="relative p-8 rounded-3xl bg-slate-900/50 border border-white/10 hover:border-orange-500/50 transition-all flex flex-col group overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <Zap size={120} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2 relative z-10">{plan.title}</h3>
+                  <p className="text-slate-400 mb-6 relative z-10">{plan.desc}</p>
+                  <div className="mb-8 relative z-10">
+                    <span className="text-sm text-slate-500 uppercase tracking-widest font-bold">Starting At</span>
+                    <div className="text-5xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 mt-2">
+                      {plan.price}
+                    </div>
+                  </div>
+                  <ul className="space-y-4 mb-8 flex-1 relative z-10">
+                    {plan.features.map((feat, idx) => (
+                      <li key={idx} className="flex items-center text-slate-300">
+                        <Check size={18} className="text-orange-500 mr-3" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <a href="https://wa.me/918303994616?text=Hi!%20I%20saw%20your%20pricing%20plans." target="_blank" rel="noreferrer" className="w-full py-4 text-center rounded-2xl bg-white text-slate-950 font-bold hover:bg-slate-200 transition-colors relative z-10">
+                    Inquire Now
+                  </a>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* TECH STACK SECTION */}
+        <section className="py-24 bg-slate-900/40 backdrop-blur-3xl border-t border-b border-slate-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-4">Elite Tech Stack</h2>
@@ -164,7 +234,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ delay: i * 0.05 }}
                     viewport={{ once: true }}
-                    className="flex flex-col items-center justify-center p-8 bg-slate-900/30 border border-white/5 rounded-[2rem] hover:bg-slate-800/50 hover:border-white/10 transition-all group"
+                    className="flex flex-col items-center justify-center p-8 bg-slate-900/30 border border-white/5 rounded-[2rem] hover:bg-slate-800/50 hover:border-white/10 transition-all group shadow-xl"
                   >
                     <Icon className={`h-10 w-10 ${tech.color} mb-4 group-hover:scale-110 transition-transform`} />
                     <span className="text-sm font-medium text-slate-300 text-center">{tech.name}</span>
@@ -176,7 +246,7 @@ export default function Home() {
         </section>
 
         {/* NICHE TEMPLATES GALLERY */}
-        <section className="py-24 bg-slate-900/50 backdrop-blur-3xl border-t border-slate-800">
+        <section className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-4">Explore Live Architectures</h2>
