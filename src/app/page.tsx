@@ -38,22 +38,22 @@ const capabilities = [
 
 const pricing = [
   { 
-    title: '5-Page Website', 
+    title: '5-Page Website (100% FREE)', 
     price: '?1,999', 
-    desc: 'Perfect for startups & local businesses.',
-    features: ['Premium Bespoke Design', 'Mobile Responsive', 'Contact Form', 'Fast Delivery']
+    desc: 'You pay ZERO for development. The ?1,999 is only for Server, Hosting, and Domain charges.',
+    features: ['1 Year Free Domain (.com/.in)', '1 Year Premium Hosting', '5 Professional Business Emails', '24/7 Dedicated Customer Support', '5-Page Custom Website Built Free']
   },
   { 
     title: 'Custom Web App', 
     price: '?4,499', 
-    desc: 'Advanced logic & databases for SaaS.',
-    features: ['User Authentication', 'Database Integration', 'Payment Gateways', 'Admin Dashboard']
+    desc: 'Advanced logic & databases for SaaS & E-Commerce.',
+    features: ['User Authentication & Login', 'Database Integration (MongoDB/SQL)', 'Payment Gateway Integration', 'Admin Control Panel Dashboard']
   },
   { 
     title: 'Android & iOS App', 
     price: '?9,999', 
-    desc: 'Full-fledged mobile application.',
-    features: ['App Store Deployment', 'Push Notifications', 'Native Animations', 'Cloud Sync']
+    desc: 'Full-fledged mobile application for Play Store & App Store.',
+    features: ['App Store & Play Store Deployment', 'Real-time Push Notifications', 'Native High-Speed Animations', 'Live Cloud Sync & Data Storage']
   }
 ];
 
@@ -186,7 +186,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   viewport={{ once: true }}
-                  className="relative p-8 rounded-3xl bg-slate-900/50 border border-white/10 hover:border-orange-500/50 transition-all flex flex-col group overflow-hidden"
+                  className={`relative p-8 rounded-3xl bg-slate-900/50 border hover:border-orange-500/50 transition-all flex flex-col group overflow-hidden ${i === 0 ? 'border-orange-500/40 shadow-2xl shadow-orange-500/10' : 'border-white/10'}`}
                 >
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <Zap size={120} />
@@ -194,20 +194,20 @@ export default function Home() {
                   <h3 className="text-2xl font-bold text-white mb-2 relative z-10">{plan.title}</h3>
                   <p className="text-slate-400 mb-6 relative z-10">{plan.desc}</p>
                   <div className="mb-8 relative z-10">
-                    <span className="text-sm text-slate-500 uppercase tracking-widest font-bold">Starting At</span>
-                    <div className="text-5xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 mt-2">
+                    <span className="text-sm text-slate-500 uppercase tracking-widest font-bold">Total Fees Only</span>
+                    <div className="text-5xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-orange-600 mt-2">
                       {plan.price}
                     </div>
                   </div>
                   <ul className="space-y-4 mb-8 flex-1 relative z-10">
                     {plan.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-center text-slate-300">
-                        <Check size={18} className="text-orange-500 mr-3" />
-                        <span>{feat}</span>
+                      <li key={idx} className="flex items-start text-slate-300">
+                        <Check size={18} className="text-orange-500 mr-3 mt-1 flex-shrink-0" />
+                        <span className="leading-tight">{feat}</span>
                       </li>
                     ))}
                   </ul>
-                  <a href="https://wa.me/918303994616?text=Hi!%20I%20saw%20your%20pricing%20plans." target="_blank" rel="noreferrer" className="w-full py-4 text-center rounded-2xl bg-white text-slate-950 font-bold hover:bg-slate-200 transition-colors relative z-10">
+                  <a href="https://wa.me/918303994616?text=Hi!%20I%20saw%20your%20pricing%20plans." target="_blank" rel="noreferrer" className={`w-full py-4 text-center rounded-2xl font-bold transition-colors relative z-10 ${i === 0 ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-white text-slate-950 hover:bg-slate-200'}`}>
                     Inquire Now
                   </a>
                 </motion.div>
