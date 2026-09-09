@@ -7,7 +7,7 @@ import {
   Utensils, Cake, BookOpen, Shirt, Tent, Hotel, Code2, Database, Globe, Layers, Server, Cpu, CheckCircle2,
   Phone, MessageSquare, Target, CreditCard, Bot, Cloud, Smartphone,
   Coffee, GraduationCap, Library, Gem, Users, Gift, Stethoscope, 
-  Car, ShoppingBag, Truck, Zap, Activity, ShieldCheck, Check, ArrowRight, MapPin
+  Car, ShoppingBag, Truck, Zap, Activity, ShieldCheck, Check, ArrowRight, MapPin, Code
 } from 'lucide-react';
 
 const categories = [
@@ -73,6 +73,33 @@ export default function Home() {
   return (
     <main className="min-h-screen relative overflow-hidden bg-slate-950 text-slate-100 font-sans selection:bg-orange-500/30 selection:text-orange-200">
       
+      {/* HEADER NAVBAR */}
+      <header className="absolute top-0 left-0 right-0 z-50 py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex justify-between items-center bg-black/20 backdrop-blur-md border border-white/5 rounded-full px-6 py-4 shadow-xl">
+          <div className="flex items-center space-x-3">
+            <div className="bg-orange-500 p-2 rounded-lg text-white">
+              <Code size={24} />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">
+                SW TECH SOLUTION
+              </span>
+              <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold -mt-1">
+                Engineering Digital Empires
+              </span>
+            </div>
+          </div>
+          <div className="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-300">
+            <a href="#templates" className="hover:text-orange-400 transition-colors">Templates</a>
+            <a href="#pricing" className="hover:text-orange-400 transition-colors">Pricing</a>
+            <a href="https://wa.me/918303994616" target="_blank" rel="noreferrer" className="flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-full hover:bg-slate-200 transition-colors">
+              <Phone size={14} />
+              <span>+91 8303994616</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
       {/* CINEMATIC BACKGROUND */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Image
@@ -86,7 +113,7 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-orange-500/20 blur-[150px] rounded-full pointer-events-none" />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 pt-20">
         
         {/* ULTRA-PREMIUM HERO SECTION */}
         <section className="relative min-h-[85vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center">
@@ -178,7 +205,7 @@ export default function Home() {
         </section>
 
         {/* 2. TRANSPARENT PRICING */}
-        <section className="py-32 bg-slate-900/40 backdrop-blur-3xl border-t border-b border-slate-800 relative">
+        <section id="pricing" className="py-32 bg-slate-900/40 backdrop-blur-3xl border-t border-b border-slate-800 relative">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center mb-20">
