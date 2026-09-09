@@ -1,5 +1,6 @@
 import { niches } from '@/data/niches';
 import { notFound } from 'next/navigation';
+import { FloatingDock } from './Dock';
 
 export async function generateStaticParams() {
   return Object.keys(niches).map((niche) => ({ niche }));
@@ -15,8 +16,9 @@ export default async function NicheLayout(props: {
   if (!nicheData) return notFound();
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 relative selection:bg-slate-800 selection:text-white">
+    <div className="min-h-screen bg-slate-950 text-slate-50 relative selection:bg-slate-800 selection:text-white font-sans">
       {props.children}
+      <FloatingDock niche={niche} accent={nicheData.accent} />
     </div>
   );
 }
