@@ -816,15 +816,27 @@ export default function PortalDealMaker() {
                 </div>
               </div>
 
-              {/* FOOTER */}
+              {/* FOOTER WITH OFFICIAL GREEN STAMP */}
               <div className="mt-6 pt-3 border-t border-slate-200 flex justify-between items-end text-xs print:text-[10px] text-slate-500 print:break-inside-avoid">
-                <div>
+                <div className="space-y-1">
                   <p className="font-semibold text-slate-700">Thank you for partnering with SW Tech Solution!</p>
                   <p className="text-[9px]">For queries: +91 8303994616 • swgayanmitraai27@gmail.com</p>
+                  <p className="text-[8.5px] text-slate-400">Garima Studio, Neori Bajar, Ramnagar Road, Ambedkarnagar, UP</p>
                 </div>
-                <div className="text-right">
-                  <div className="h-8 border-b border-slate-400 w-36 mb-1"></div>
-                  <p className="font-bold text-slate-800 text-[10px]">Authorized Signatory</p>
+                <div className="text-right flex flex-col items-end">
+                  {/* GREEN EMBOSSED STAMP */}
+                  <div className="border-2 border-dashed border-green-600/50 rounded-xl bg-green-50/70 p-2.5 text-center min-w-[210px] shadow-sm">
+                    <div className="border-2 border-green-700 bg-white/95 rounded-lg px-3 py-1 text-green-800 font-extrabold text-[10.5px] uppercase tracking-widest rotate-[-2deg] shadow-sm flex items-center justify-center space-x-1">
+                      <ShieldCheck size={13} className="text-green-700 inline mr-1" />
+                      <span>VERIFIED BY SW TECH SOLUTION</span>
+                    </div>
+                    <p className="text-[8px] font-bold text-green-900 mt-1">Garima Studio, Ambedkarnagar UP • Govt Reg. Compliant</p>
+                    <div className="border-t border-green-200 mt-1 pt-1 flex justify-between items-center text-[9px] text-green-800 font-bold px-1">
+                      <span>OFFICIAL SEAL</span>
+                      <span>AUTHORIZED SIGNATORY</span>
+                    </div>
+                  </div>
+                  <p className="font-bold text-slate-800 text-[10px] mt-1">SW Tech Solution • Official Stamp</p>
                 </div>
               </div>
 
