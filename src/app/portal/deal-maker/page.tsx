@@ -17,7 +17,8 @@ import {
   Send,
   Copy,
   Check,
-  Sparkles
+  Sparkles,
+  ShieldCheck
 } from 'lucide-react';
 
 export default function PortalDealMaker() {
@@ -36,6 +37,7 @@ export default function PortalDealMaker() {
   const [selectedPackage, setSelectedPackage] = useState('website');
   const [customPackageName, setCustomPackageName] = useState('Custom Business Solution');
   const [dealAmount, setDealAmount] = useState(1999);
+  const [discountAmount, setDiscountAmount] = useState(0);
   const [advancePaid, setAdvancePaid] = useState(1000);
   const [deliveryDays, setDeliveryDays] = useState('24 Hours');
   const [invoiceNumber, setInvoiceNumber] = useState('SWTS-2026-849');
@@ -44,13 +46,12 @@ export default function PortalDealMaker() {
   const [upiId, setUpiId] = useState('8303994616@paytm');
   const [copiedNotice, setCopiedNotice] = useState(false);
 
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [hasSignature, setHasSignature] = useState(false);
+  const agencyCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [isAgencyDrawing, setIsAgencyDrawing] = useState(false);
+  const [hasAgencySign, setHasAgencySign] = useState(false);
 
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
-
-  const addonList = [
+  const [addonList, setAddonList] = useState([
     { id: 'gateway', name: 'Online Payment Gateway (Razorpay/PhonePe)', price: 1499, timeline: '+2 Days' },
     { id: 'whatsapp_bot', name: 'WhatsApp Auto-Order & Alerts Bot', price: 1999, timeline: '+2 Days' },
     { id: 'extra_pages', name: 'Extra 3 Custom Inner Pages', price: 999, timeline: '+1 Day' },
@@ -58,7 +59,24 @@ export default function PortalDealMaker() {
     { id: 'admin_panel', name: 'Custom Dynamic Admin Control Panel', price: 2499, timeline: '+3 Days' },
     { id: 'hindi_switch', name: 'Dual-Language Support (Hindi + English)', price: 899, timeline: '+1 Day' },
     { id: 'live_tracking', name: 'Real-time GPS / Order Status Tracking', price: 2999, timeline: '+4 Days' },
-  ];
+  ]);
+
+  const [newAddonName, setNewAddonName] = useState('');
+  const [newAddonPrice, setNewAddonPrice] = useState(999);
+
+  const handleAddCustomAddon = () => {
+    if (!newAddonName.trim()) return;
+    const newId = 'custom_' + Date.now();
+    const item = { id: newId, name: newAddonName.trim(), price: Number(newAddonPrice) || 0, timeline: '+2 Days' };
+    setAddonList([...addonList, item]);
+    setSelectedAddons([...selectedAddons, newId]);
+    setNewAddonName('');
+    setNewAddonPrice(999);
+  };
+
+  const updateAddonPrice = (id: string, price: number) => {
+    setAddonList(addonList.map(a => a.id === id ? { ...a, price: Number(price) || 0 } : a));
+  };
 
   const handlePackageChange = (pkg: any) => {
     setSelectedPackage(pkg);
@@ -99,14 +117,14 @@ export default function PortalDealMaker() {
     }
   };
 
-  const startDrawing = (e: any) => {
-    const canvas = canvasRef.current;
+  const startAgencyDrawing = (e: any) => {
+    const canvas = agencyCanvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    setIsDrawing(true);
-    setHasSignature(true);
+    setIsAgencyDrawing(true);
+    setHasAgencySign(true);
     const rect = canvas.getBoundingClientRect();
     const x = 'touches' in e ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
     const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
@@ -115,9 +133,9 @@ export default function PortalDealMaker() {
     ctx.moveTo(x, y);
   };
 
-  const draw = (e: any) => {
-    if (!isDrawing) return;
-    const canvas = canvasRef.current;
+  const drawAgency = (e: any) => {
+    if (!isAgencyDrawing) return;
+    const canvas = agencyCanvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -127,24 +145,24 @@ export default function PortalDealMaker() {
     const y = 'touches' in e ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
 
     ctx.lineTo(x, y);
-    ctx.strokeStyle = '#f97316';
+    ctx.strokeStyle = '#15803d';
     ctx.lineWidth = 2.5;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.stroke();
   };
 
-  const stopDrawing = () => {
-    setIsDrawing(false);
+  const stopAgencyDrawing = () => {
+    setIsAgencyDrawing(false);
   };
 
-  const clearSignature = () => {
-    const canvas = canvasRef.current;
+  const clearAgencySignature = () => {
+    const canvas = agencyCanvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    setHasSignature(false);
+    setHasAgencySign(false);
   };
 
   const addonsTotal = selectedAddons.reduce((sum, id) => {
@@ -152,14 +170,53 @@ export default function PortalDealMaker() {
     return sum + (found ? found.price : 0);
   }, 0);
 
-  const grandTotal = dealAmount + addonsTotal;
-  const balanceRemaining = Math.max(0, grandTotal - advancePaid);
+  const subtotalBeforeDiscount = dealAmount + addonsTotal;
+  const grandTotal = Math.max(0, subtotalBeforeDiscount - (Number(discountAmount) || 0));
+  const balanceRemaining = Math.max(0, grandTotal - (Number(advancePaid) || 0));
 
   const handlePrint = () => {
     window.print();
   };
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const getClientSignUrl = () => {
+    const pkgTitle = selectedPackage === 'website' ? '5-Page High-Speed Website' : selectedPackage === 'webapp' ? 'Full-Stack Custom Web App' : selectedPackage === 'android' ? 'Android Mobile App (Play Store)' : customPackageName;
+    const payload = {
+      clientName,
+      businessName,
+      clientPhone,
+      domainName,
+      planTitle: pkgTitle,
+      dealAmount: grandTotal,
+      originalAmount: subtotalBeforeDiscount,
+      discountAmount: Number(discountAmount) || 0,
+      advancePaid,
+      balanceRemaining,
+      deliveryDays,
+      invoiceNumber,
+      dealDate,
+      upiId
+    };
+    try {
+      const jsonStr = unescape(encodeURIComponent(JSON.stringify(payload)));
+      const b64 = btoa(jsonStr);
+      const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'https://sw-tech-portfolio.swgayanmitraai27.workers.dev';
+      return origin + '/sign?d=' + b64;
+    } catch (e) {
+      return '';
+    }
+  };
+
+  const copyClientSignLink = () => {
+    const url = getClientSignUrl();
+    navigator.clipboard.writeText(url);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 3000);
+  };
+
   const shareAgreementWhatsApp = () => {
     const pkgTitle = selectedPackage === 'website' ? '5-Page High-Speed Website' : selectedPackage === 'webapp' ? 'Full-Stack Custom Web App' : selectedPackage === 'android' ? 'Android Mobile App (Play Store)' : customPackageName;
+    const signUrl = getClientSignUrl();
     const text = '*OFFICIAL PROJECT CONTRACT & AGREEMENT*\n' +
       '*Agency:* SW TECH SOLUTION\n' +
       '*Office:* Garima Studio, Neori Bajar, Ramnagar Road, Ambedkarnagar UP (+91 8303994616)\n' +
@@ -171,16 +228,20 @@ export default function PortalDealMaker() {
       '*Selected Plan:* ' + pkgTitle + '\n' +
       '*Delivery Timeline:* ' + deliveryDays + '\n\n' +
       '*COMMERCIALS:*\n' +
-      ' Total Deal Value: ?' + grandTotal + '\n' +
-      ' Advance Amount Paid: ?' + advancePaid + '\n' +
-      ' Balance on Completion: ?' + balanceRemaining + '\n' +
-      ' Pay via UPI: ' + upiId + '\n\n' +
+      '• Package Amount: ₹' + subtotalBeforeDiscount + '\n' +
+      (discountAmount > 0 ? ('• Special Discount: -₹' + discountAmount + '\n') : '') +
+      '• Final Deal Value: ₹' + grandTotal + '\n' +
+      '• Advance Paid: ₹' + advancePaid + '\n' +
+      '• Balance on Completion: ₹' + balanceRemaining + '\n' +
+      '• Pay via UPI: ' + upiId + '\n\n' +
       '*INCLUDED SERVICES (1 YEAR):*\n' +
-      '? 1 Year Free Domain (.com/.in)\n' +
-      '? 1 Year Ultra-Fast Cloud Hosting\n' +
-      '? 5 Official Business Emails\n' +
-      '? 24/7 Maintenance & Support\n' +
-      '? SSL Security & Mobile Responsive UI\n\n' +
+      '✓ 1 Year Free Domain (.com/.in)\n' +
+      '✓ 1 Year Ultra-Fast Cloud Hosting\n' +
+      '✓ 5 Official Business Emails\n' +
+      '✓ 24/7 Maintenance & Support\n' +
+      '✓ SSL Security & Mobile Responsive UI\n\n' +
+      '✍️ *DIGITALLY SIGN YOUR CONTRACT HERE (Click to Open & Sign on Mobile):*\n' +
+      signUrl + '\n\n' +
       '_This is a digitally generated contract binding SW Tech Solution and the client for software delivery._';
 
     window.open('https://wa.me/91' + clientPhone + '?text=' + encodeURIComponent(text), '_blank');
@@ -367,7 +428,7 @@ export default function PortalDealMaker() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 text-sm mt-4">
             <div>
               <label className="block text-slate-400 text-xs mb-1">Project Package</label>
               <select
@@ -375,27 +436,37 @@ export default function PortalDealMaker() {
                 onChange={(e) => handlePackageChange(e.target.value)}
                 className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:border-orange-500 focus:outline-none"
               >
-                <option value="website">5-Page Website (?1,999 - Free Build)</option>
-                <option value="webapp">Custom Web App (?4,499 - Full Stack)</option>
-                <option value="android">Android App (?9,999 - Play Store)</option>
-                <option value="custom">Custom Deal / Quote</option>
+                <option value="website">5-Page Website (₹1,999 Base)</option>
+                <option value="webapp">Custom Web App (₹4,499 Base)</option>
+                <option value="android">Android App (₹9,999 Base)</option>
+                <option value="custom">Custom Deal / Package</option>
               </select>
             </div>
             <div>
-              <label className="block text-slate-400 text-xs mb-1">Base Package Price (?)</label>
+              <label className="block text-slate-400 text-xs mb-1">Package Price (₹ Editable)</label>
               <input
                 type="number"
                 value={dealAmount}
-                onChange={(e) => setDealAmount(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:border-orange-500 focus:outline-none"
+                onChange={(e) => setDealAmount(Number(e.target.value) || 0)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-orange-500/50 text-white font-bold focus:border-orange-500 focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-slate-400 text-xs mb-1">Advance Amount Paid (?)</label>
+              <label className="block text-slate-400 text-xs mb-1">Special Discount (₹ Off)</label>
+              <input
+                type="number"
+                value={discountAmount}
+                onChange={(e) => setDiscountAmount(Number(e.target.value) || 0)}
+                placeholder="0"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-green-500/50 text-green-400 font-bold focus:border-green-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-slate-400 text-xs mb-1">Advance Received (₹)</label>
               <input
                 type="number"
                 value={advancePaid}
-                onChange={(e) => setAdvancePaid(Number(e.target.value))}
+                onChange={(e) => setAdvancePaid(Number(e.target.value) || 0)}
                 className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:border-orange-500 focus:outline-none"
               />
             </div>
@@ -419,19 +490,26 @@ export default function PortalDealMaker() {
               <div className="text-sm text-orange-200">
                 ? <strong className="text-white">Deal Summary:</strong> Total: <strong>?{grandTotal}</strong> | Advance: <strong>?{advancePaid}</strong> | Due on Delivery: <strong>?{balanceRemaining}</strong>
               </div>
-              <div className="flex items-center space-x-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  onClick={copyClientSignLink}
+                  className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all shadow border border-white/10"
+                >
+                  <Copy size={14} />
+                  <span>{copiedLink ? 'Sign Link Copied!' : 'Copy Client Sign Link'}</span>
+                </button>
                 <button
                   onClick={shareAgreementWhatsApp}
-                  className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-sm transition-all shadow-lg"
+                  className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-xs transition-all shadow-lg"
                 >
-                  <Send size={16} />
-                  <span>Send Agreement on WhatsApp</span>
+                  <Send size={14} />
+                  <span>Send Agreement & Sign Link on WhatsApp</span>
                 </button>
                 <button
                   onClick={handlePrint}
-                  className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm transition-all shadow-lg"
+                  className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs transition-all shadow-lg"
                 >
-                  <Printer size={16} />
+                  <Printer size={14} />
                   <span>Download / Print PDF</span>
                 </button>
               </div>
@@ -535,21 +613,27 @@ export default function PortalDealMaker() {
                         <tr key={id}>
                           <td className="p-2 border">{found.name}</td>
                           <td className="p-2 border text-center">1 Item</td>
-                          <td className="p-2 border text-right">?{found.price}</td>
+                          <td className="p-2 border text-right">₹{found.price}</td>
                         </tr>
                       ) : null;
                     })}
+                    {discountAmount > 0 && (
+                      <tr className="text-green-700 font-bold bg-green-50">
+                        <td className="p-2 border text-right" colSpan={2}>Special Promotional Discount:</td>
+                        <td className="p-2 border text-right">-₹{discountAmount}</td>
+                      </tr>
+                    )}
                     <tr className="bg-slate-50 font-bold">
                       <td className="p-2 border text-right" colSpan={2}>Grand Total Deal Value:</td>
-                      <td className="p-2 border text-right text-sm">?{grandTotal}</td>
+                      <td className="p-2 border text-right text-sm">₹{grandTotal}</td>
                     </tr>
                     <tr className="text-green-700 font-bold">
                       <td className="p-2 border text-right" colSpan={2}>Advance Paid / Received:</td>
-                      <td className="p-2 border text-right">?{advancePaid}</td>
+                      <td className="p-2 border text-right">₹{advancePaid}</td>
                     </tr>
                     <tr className="bg-orange-50 text-orange-900 font-bold text-sm">
                       <td className="p-2 border text-right" colSpan={2}>Balance Due on Final Delivery & Handover:</td>
-                      <td className="p-2 border text-right">?{balanceRemaining}</td>
+                      <td className="p-2 border text-right">₹{balanceRemaining}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -558,56 +642,62 @@ export default function PortalDealMaker() {
               {/* TERMS */}
               <div className="mb-8 text-[10px] text-slate-600 leading-normal space-y-1 bg-slate-50 p-4 rounded-xl border border-slate-200">
                 <p className="font-bold text-slate-800 uppercase text-[11px] mb-1">3. Key Terms & Guarantees:</p>
-                <p> <strong>Timely Delivery:</strong> SW Tech Solution commits to delivering the primary prototype within {deliveryDays}.</p>
-                <p> <strong>Annual Renewals:</strong> Domain and Cloud Server are valid for 1 full year from creation. Subsequent year renewals are charged at prevailing registry and hosting costs (Bundle: ?3,999/yr).</p>
-                <p> <strong>Content & Approvals:</strong> Client shall provide required business logos, phone numbers, and photos. Minor revisions are completed at zero extra cost.</p>
-                <p> <strong>Handover:</strong> Admin credentials and ownership are fully transferred once the final balance of ?{balanceRemaining} is settled.</p>
+                <p>• <strong>Timely Delivery:</strong> SW Tech Solution commits to delivering the primary prototype within {deliveryDays}.</p>
+                <p>• <strong>Annual Renewals:</strong> Domain and Cloud Server are valid for 1 full year from creation. Subsequent year renewals are charged at prevailing registry and hosting costs (Bundle: ₹3,999/yr).</p>
+                <p>• <strong>Content & Approvals:</strong> Client shall provide required business logos, phone numbers, and photos. Minor revisions are completed at zero extra cost.</p>
+                <p>• <strong>Handover:</strong> Admin credentials and ownership are fully transferred once the final balance of ₹{balanceRemaining} is settled.</p>
               </div>
 
-              {/* SIGNATURE */}
+              {/* SIGNATURE SECTION WITH GREEN VERIFIED STAMP & ONLINE AGENCY SIGNATURE */}
               <div className="grid grid-cols-2 gap-8 pt-6 border-t-2 border-slate-300">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">CLIENT SIGNATURE & ACCEPTANCE</p>
-                  <div className="relative h-24 border border-dashed border-slate-400 rounded-xl bg-slate-50 flex items-center justify-center overflow-hidden">
-                    <canvas
-                      ref={canvasRef}
-                      width={300}
-                      height={96}
-                      onMouseDown={startDrawing}
-                      onMouseMove={draw}
-                      onMouseUp={stopDrawing}
-                      onMouseLeave={stopDrawing}
-                      onTouchStart={startDrawing}
-                      onTouchMove={draw}
-                      onTouchEnd={stopDrawing}
-                      className="cursor-crosshair w-full h-full"
-                    />
-                    {!hasSignature && (
-                      <span className="print:hidden absolute text-slate-400 text-xs pointer-events-none">
-                        ?? Draw Sign Here (Touch / Mouse)
-                      </span>
-                    )}
+                  <div className="h-28 border border-dashed border-slate-300 rounded-xl bg-slate-50 flex flex-col items-center justify-center text-center p-3">
+                    <p className="text-xs font-bold text-slate-800">{clientName}</p>
+                    <p className="text-[11px] text-slate-600 font-medium">{businessName}</p>
+                    <p className="text-[9px] text-slate-400 mt-1">Signable online via Client Link</p>
                   </div>
                   <div className="flex justify-between items-center mt-1">
                     <span className="text-[10px] text-slate-600 font-bold">{clientName} ({businessName})</span>
-                    <button
-                      onClick={clearSignature}
-                      className="print:hidden text-[10px] text-rose-500 hover:underline"
-                    >
-                      Clear Sign
-                    </button>
                   </div>
                 </div>
 
                 <div className="text-right">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">AUTHORIZED AGENCY STAMP</p>
-                  <div className="h-24 border border-dashed border-orange-300 rounded-xl bg-orange-50/50 flex flex-col items-center justify-center text-center p-2">
-                    <div className="border-2 border-orange-600 rounded-lg px-3 py-1 text-orange-700 font-bold text-xs uppercase tracking-widest rotate-[-3deg] shadow-sm">
-                      SW TECH SOLUTION
-                      <div className="text-[8px] font-normal text-slate-600">VERIFIED CONTRACT</div>
-                    </div>
+                  <div className="flex justify-between items-center mb-1">
+                    <button
+                      onClick={clearAgencySignature}
+                      className="print:hidden text-[10px] text-rose-500 hover:underline"
+                    >
+                      Clear Sign
+                    </button>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">AUTHORIZED AGENCY SIGNATURE & SEAL</p>
                   </div>
-                  <p className="text-[10px] text-slate-600 font-bold mt-1">Authorized Signatory  SW Tech Solution</p>
+
+                  {/* GREEN EMBOSSED STAMP + SIGNATURE PAD */}
+                  <div className="relative h-28 border-2 border-dashed border-green-600/40 rounded-xl bg-green-50/50 flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center opacity-80 pointer-events-none select-none">
+                      <div className="border-2 border-green-700 bg-white/80 rounded-lg px-4 py-1 text-green-800 font-extrabold text-[11px] uppercase tracking-widest rotate-[-3deg] shadow-sm flex items-center space-x-1">
+                        <ShieldCheck size={14} className="text-green-700 inline mr-1" />
+                        <span>VERIFIED BY SW TECH SOLUTION</span>
+                      </div>
+                      <p className="text-[8px] font-bold text-green-900 mt-0.5 tracking-wider">GARIMA STUDIO, AMBEDKARNAGAR UP • GOVT REG. COMPLIANT</p>
+                    </div>
+
+                    <canvas
+                      ref={agencyCanvasRef}
+                      width={320}
+                      height={110}
+                      onMouseDown={startAgencyDrawing}
+                      onMouseMove={drawAgency}
+                      onMouseUp={stopAgencyDrawing}
+                      onMouseLeave={stopAgencyDrawing}
+                      onTouchStart={startAgencyDrawing}
+                      onTouchMove={drawAgency}
+                      onTouchEnd={stopAgencyDrawing}
+                      className="cursor-crosshair w-full h-full relative z-10"
+                    />
+                  </div>
+                  <p className="text-[10px] text-green-900 font-bold mt-1">Authorized Signatory • SW Tech Solution</p>
                 </div>
               </div>
 
