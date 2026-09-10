@@ -143,27 +143,53 @@ function SignContractComponent() {
       '*Business Name:* ' + businessName + '\n' +
       '*Contract Ref:* ' + invoiceNumber + '\n' +
       '*Package:* ' + planTitle + '\n' +
-      '*Total Value:* ?' + dealAmount + '\n' +
-      '*Advance Paid:* ?' + advancePaid + '\n' +
-      '*Balance Due on Delivery:* ?' + balanceRemaining + '\n' +
+      '*Total Value:* ₹' + dealAmount + '\n' +
+      '*Advance Paid:* ₹' + advancePaid + '\n' +
+      '*Balance Due on Delivery:* ₹' + balanceRemaining + '\n' +
       '*Signed Date & Time:* ' + (signatureTime || new Date().toLocaleString()) + '\n\n' +
       '_I have reviewed and digitally signed the project agreement with SW Tech Solution. Please proceed with the development as per the terms._';
 
     window.open('https://wa.me/918303994616?text=' + encodeURIComponent(msg), '_blank');
   };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans py-6 px-3 sm:px-6 lg:px-8 print:p-0 print:m-0 print:bg-white print:text-black">
+      {/* GLOBAL PRINT STYLES */}
+      <style jsx global>{`
+        @media print {
+          @page {
+            size: A4 portrait;
+            margin: 6mm 8mm;
+          }
+          html, body {
+            background: #ffffff !important;
+            color: #000000 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          .print-contract-root {
+            padding: 0 !important;
+            margin: 0 !important;
+            max-width: 100% !important;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+          }
+        }
+      `}</style>
+
+      <div className="max-w-4xl mx-auto print-contract-root">
         
-        {/* TOP NOTICE */}
-        <div className="print:hidden mb-6 p-4 rounded-2xl bg-gradient-to-r from-orange-500/20 via-amber-500/10 to-transparent border border-orange-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* TOP NOTICE (HIDDEN IN PRINT) */}
+        <div className="print:hidden mb-5 p-4 rounded-2xl bg-gradient-to-r from-orange-500/20 via-amber-500/10 to-transparent border border-orange-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold shadow-lg shrink-0">
               <ShieldCheck size={20} />
             </div>
             <div>
               <h3 className="text-sm font-bold text-white">Digital Project Agreement & Sign Portal</h3>
-              <p className="text-xs text-slate-400">SW Tech Solution  Garima Studio, Neori Bajar, Ambedkarnagar UP</p>
+              <p className="text-xs text-slate-400">SW Tech Solution • Garima Studio, Neori Bajar, Ambedkarnagar UP</p>
             </div>
           </div>
 
@@ -172,126 +198,125 @@ function SignContractComponent() {
             className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white text-slate-950 text-xs font-bold hover:bg-slate-200 transition-colors shadow"
           >
             <Printer size={14} />
-            <span>Print Contract</span>
+            <span>Print / Save PDF</span>
           </button>
         </div>
 
-        {/* PRINTABLE AGREEMENT DOCUMENT */}
-        <div className="bg-white text-slate-900 p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-200 print:p-0 print:border-none print:shadow-none">
+        {/* PRINTABLE AGREEMENT DOCUMENT (FITS EXACTLY 1 A4 PAGE) */}
+        <div className="bg-white text-slate-900 p-6 sm:p-10 rounded-3xl shadow-2xl border border-slate-200 print:p-2 print:m-0 print:border-none print:shadow-none print:rounded-none">
           
           {/* HEADER */}
-          <div className="flex justify-between items-start border-b-2 border-slate-900 pb-6 mb-8">
+          <div className="flex justify-between items-start border-b-2 border-slate-900 pb-3 mb-3 print:pb-2 print:mb-2">
             <div>
-              <span className="text-2xl sm:text-3xl font-serif font-black tracking-tight text-orange-600">
+              <span className="text-2xl sm:text-3xl print:text-xl font-serif font-black tracking-tight text-orange-600">
                 SW TECH SOLUTION
               </span>
-              <p className="text-xs uppercase tracking-widest text-slate-600 font-bold mt-1">
+              <p className="text-[11px] uppercase tracking-widest text-slate-600 font-bold mt-0.5">
                 Software Development & Digital Architecture Agency
               </p>
-              <p className="text-xs text-slate-600 mt-1">
+              <p className="text-[10px] text-slate-600">
                 Garima Studio, Neori Bajar, Ramnagar Road, Ambedkarnagar, UP
               </p>
-              <p className="text-xs text-slate-600">
-                Phone / WhatsApp: +91 8303994616  Official UPI: {upiId}
+              <p className="text-[10px] text-slate-600">
+                Phone / WhatsApp: +91 8303994616 • Official UPI: {upiId}
               </p>
             </div>
-            <div className="text-right">
-              <div className="inline-block bg-slate-900 text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider mb-2">
-                Client Project Contract
+            <div className="text-right shrink-0">
+              <div className="inline-block bg-slate-900 text-white px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider mb-1 print:bg-slate-900 print:text-white">
+                Client Contract
               </div>
-              <p className="text-xs font-bold text-slate-700">Agreement No: {invoiceNumber}</p>
-              <p className="text-xs text-slate-500">Date: {dealDate}</p>
+              <p className="text-[11px] font-bold text-slate-800">Ref: {invoiceNumber}</p>
+              <p className="text-[10px] text-slate-500">Date: {dealDate}</p>
             </div>
           </div>
 
-          {/* CLIENT DETAILS */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 rounded-xl bg-slate-50 border border-slate-200 mb-8 text-xs">
+          {/* CLIENT & PROJECT DETAILS */}
+          <div className="grid grid-cols-2 gap-4 p-3 rounded-xl bg-slate-50 border border-slate-200 mb-3 print:p-2 print:mb-2 text-xs print:text-[10.5px]">
             <div>
-              <p className="text-slate-400 font-bold uppercase text-[10px] tracking-wider mb-1">CLIENT & BUSINESS DETAILS</p>
-              <p className="text-sm font-bold text-slate-900">{clientName}</p>
+              <p className="text-slate-400 font-bold uppercase text-[9px] tracking-wider mb-0.5">CLIENT & BUSINESS DETAILS</p>
+              <p className="text-sm print:text-xs font-bold text-slate-900">{clientName}</p>
               <p className="font-semibold text-slate-700">{businessName}</p>
               {clientPhone && <p className="text-slate-600">Contact: +91 {clientPhone}</p>}
             </div>
             <div>
-              <p className="text-slate-400 font-bold uppercase text-[10px] tracking-wider mb-1">PROJECT SPECIFICATION</p>
-              <p className="text-sm font-bold text-orange-600">{planTitle}</p>
-              {domainName && <p className="text-slate-700"><strong>Registered Domain:</strong> {domainName}</p>}
+              <p className="text-slate-400 font-bold uppercase text-[9px] tracking-wider mb-0.5">PROJECT SPECIFICATION</p>
+              <p className="text-sm print:text-xs font-bold text-orange-600">{planTitle}</p>
+              {domainName && <p className="text-slate-700"><strong>Domain:</strong> {domainName}</p>}
               <p className="text-slate-700"><strong>Delivery Timeline:</strong> {deliveryDays}</p>
-              <p className="text-slate-700"><strong>Validity:</strong> 1 Year Live Server & Domain Maintenance</p>
+              <p className="text-slate-700"><strong>Validity:</strong> 1 Year Live Server & Domain</p>
             </div>
           </div>
 
           {/* SCOPE OF DELIVERABLES */}
-          <div className="mb-8">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b pb-2 mb-3">
+          <div className="mb-3 print:mb-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 border-b pb-1 mb-1.5 print:pb-0.5 print:mb-1">
               1. Project Deliverables & Service Inclusions
             </h4>
-            <ul className="text-xs text-slate-700 space-y-2 list-disc pl-5 leading-relaxed">
-              <li><strong>Custom Design & Development:</strong> Bespoke high-speed responsive layout tailored for {businessName}, optimized for mobile, tablet, and desktop screens.</li>
-              <li><strong>Domain & High-Speed Hosting:</strong> 1 Year of top-level Domain registration ({domainName || 'Your Selected Domain'}) + 1 Year NVMe Cloud Hosting.</li>
-              <li><strong>Professional Business Emails:</strong> Up to 5 domain-branded business mailboxes configured.</li>
-              <li><strong>Security & SSL Certificate:</strong> Full HTTPS SSL encryption and security setup.</li>
-              <li><strong>Support:</strong> 24/7 technical customer support and uptime monitoring by SW Tech Solution.</li>
+            <ul className="text-[11px] print:text-[9.5px] text-slate-700 space-y-1 print:space-y-0.5 list-disc pl-4 leading-tight">
+              <li><strong>Custom Design & Development:</strong> Bespoke high-speed responsive layout tailored for {businessName}, optimized for mobile & desktop screens.</li>
+              <li><strong>Domain & High-Speed Hosting:</strong> 1 Year top-level Domain ({domainName || 'Registered Domain'}) + 1 Year NVMe Cloud Hosting.</li>
+              <li><strong>Business Mail & Security:</strong> Up to 5 custom branded mailboxes + End-to-end SSL encryption setup.</li>
+              <li><strong>Maintenance & Support:</strong> 24/7 technical customer support and uptime monitoring by SW Tech Solution.</li>
             </ul>
           </div>
 
-          {/* COMMERCIAL TERMS */}
-          <div className="mb-8">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b pb-2 mb-3">
+          {/* COMMERCIAL TERMS TABLE */}
+          <div className="mb-3 print:mb-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 border-b pb-1 mb-1.5 print:pb-0.5 print:mb-1">
               2. Commercials & Payment Summary
             </h4>
-            <table className="w-full text-xs text-left border border-slate-200">
+            <table className="w-full text-xs print:text-[10px] text-left border border-slate-200">
               <thead className="bg-slate-100 text-slate-800">
                 <tr>
-                  <th className="p-2 border">Service Description</th>
-                  <th className="p-2 border text-center">Term</th>
-                  <th className="p-2 border text-right">Amount (?)</th>
+                  <th className="p-1.5 print:p-1 border">Service Description</th>
+                  <th className="p-1.5 print:p-1 border text-center">Term</th>
+                  <th className="p-1.5 print:p-1 border text-right">Amount (₹)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="p-2 border font-medium">{planTitle}</td>
-                  <td className="p-2 border text-center">1 Year</td>
-                  <td className="p-2 border text-right font-bold">?{dealAmount}</td>
+                  <td className="p-1.5 print:p-1 border font-medium">{planTitle}</td>
+                  <td className="p-1.5 print:p-1 border text-center">1 Year</td>
+                  <td className="p-1.5 print:p-1 border text-right font-bold">₹{dealAmount}</td>
                 </tr>
                 <tr className="bg-slate-50 font-bold">
-                  <td className="p-2 border text-right" colSpan={2}>Total Contract Value:</td>
-                  <td className="p-2 border text-right text-sm">?{dealAmount}</td>
+                  <td className="p-1.5 print:p-1 border text-right" colSpan={2}>Total Contract Value:</td>
+                  <td className="p-1.5 print:p-1 border text-right">₹{dealAmount}</td>
                 </tr>
                 <tr className="text-green-700 font-bold">
-                  <td className="p-2 border text-right" colSpan={2}>Advance Amount Paid:</td>
-                  <td className="p-2 border text-right">?{advancePaid}</td>
+                  <td className="p-1.5 print:p-1 border text-right" colSpan={2}>Advance Amount Paid:</td>
+                  <td className="p-1.5 print:p-1 border text-right">₹{advancePaid}</td>
                 </tr>
-                <tr className="bg-orange-50 text-orange-900 font-bold text-sm">
-                  <td className="p-2 border text-right" colSpan={2}>Balance Due on Delivery:</td>
-                  <td className="p-2 border text-right">?{balanceRemaining}</td>
+                <tr className="bg-orange-50 text-orange-900 font-bold">
+                  <td className="p-1.5 print:p-1 border text-right" colSpan={2}>Balance Due on Delivery:</td>
+                  <td className="p-1.5 print:p-1 border text-right">₹{balanceRemaining}</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           {/* KEY GUARANTEES */}
-          <div className="mb-8 text-[10px] text-slate-600 leading-normal space-y-1 bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <p className="font-bold text-slate-800 uppercase text-[11px] mb-1">3. Key Terms & Service Guarantee:</p>
-            <p> <strong>Timely Delivery:</strong> Development is scheduled for delivery within {deliveryDays}.</p>
-            <p> <strong>Ownership & Handover:</strong> 100% full source and admin ownership transferred upon settlement of remaining balance.</p>
-            <p> <strong>Annual Renewals:</strong> Year 2 renewal is charged at standard server/domain rates (Bundle: ?3,999/year).</p>
+          <div className="mb-3 print:mb-2 text-[10px] print:text-[9px] text-slate-600 leading-tight space-y-0.5 bg-slate-50 p-2.5 print:p-1.5 rounded-xl border border-slate-200">
+            <p className="font-bold text-slate-800 uppercase text-[10px] print:text-[9px] mb-0.5">3. Key Terms & Service Guarantee:</p>
+            <p>• <strong>Timely Delivery:</strong> Development is scheduled for delivery within {deliveryDays}.</p>
+            <p>• <strong>Ownership & Handover:</strong> 100% full source and admin ownership transferred upon settlement of remaining balance.</p>
+            <p>• <strong>Annual Renewals:</strong> Year 2 renewal is charged at standard server/domain rates (Bundle: ₹3,999/year).</p>
           </div>
 
-          {/* SIGNATURE SECTION */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6 border-t-2 border-slate-300">
+          {/* SIGNATURE SECTION (NEVER SPLITS) */}
+          <div className="grid grid-cols-2 gap-4 pt-2.5 border-t-2 border-slate-300 print:break-inside-avoid print:pt-1.5">
             
             {/* CLIENT SIGNATURE */}
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
-                CLIENT DIGITAL SIGNATURE {isSignedSubmitted && <span className="text-green-600">(? SIGNED)</span>}
+              <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                CLIENT DIGITAL SIGNATURE {isSignedSubmitted && <span className="text-green-600">(✓ SIGNED)</span>}
               </p>
               
-              <div className="relative h-28 border-2 border-dashed border-slate-400 rounded-xl bg-slate-50 flex items-center justify-center overflow-hidden">
+              <div className="relative h-20 print:h-16 border-2 border-dashed border-slate-400 rounded-xl bg-slate-50 flex items-center justify-center overflow-hidden">
                 <canvas
                   ref={canvasRef}
-                  width={340}
-                  height={112}
+                  width={320}
+                  height={80}
                   onMouseDown={startDrawing}
                   onMouseMove={draw}
                   onMouseUp={stopDrawing}
@@ -302,18 +327,18 @@ function SignContractComponent() {
                   className="cursor-crosshair w-full h-full"
                 />
                 {!hasSignature && (
-                  <span className="print:hidden absolute text-slate-400 text-xs pointer-events-none text-center px-4">
-                    ?? Draw your signature here using finger (Touch) or mouse
+                  <span className="print:hidden absolute text-slate-400 text-[11px] pointer-events-none text-center px-2">
+                    ✍️ Draw signature using finger or mouse
                   </span>
                 )}
               </div>
 
-              <div className="flex justify-between items-center mt-2">
-                <span className="text-xs text-slate-700 font-bold">{clientName} ({businessName})</span>
+              <div className="flex justify-between items-center mt-1">
+                <span className="text-[10px] text-slate-700 font-bold">{clientName} ({businessName})</span>
                 {!isSignedSubmitted && (
                   <button
                     onClick={clearSignature}
-                    className="print:hidden text-xs text-rose-500 hover:underline font-medium"
+                    className="print:hidden text-[10px] text-rose-500 hover:underline font-medium"
                   >
                     Clear Sign
                   </button>
@@ -321,8 +346,8 @@ function SignContractComponent() {
               </div>
 
               {isSignedSubmitted && (
-                <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded-lg text-[10px] text-green-800 flex items-center">
-                  <Check size={12} className="mr-1 text-green-600 shrink-0" />
+                <div className="mt-1 p-1 bg-green-50 border border-green-200 rounded text-[9px] text-green-800 flex items-center">
+                  <Check size={10} className="mr-1 text-green-600 shrink-0" />
                   <span>Digitally Signed on {signatureTime}</span>
                 </div>
               )}
@@ -331,25 +356,25 @@ function SignContractComponent() {
             {/* AGENCY STAMP */}
             <div className="text-right flex flex-col justify-between">
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">AUTHORIZED AGENCY SEAL</p>
-                <div className="h-28 border border-dashed border-orange-300 rounded-xl bg-orange-50/40 flex flex-col items-center justify-center text-center p-2">
-                  <div className="border-2 border-orange-600 rounded-lg px-4 py-1.5 text-orange-700 font-bold text-xs uppercase tracking-widest rotate-[-2deg] shadow-sm">
-                    SW TECH SOLUTION
-                    <div className="text-[8px] font-normal text-slate-600">OFFICIAL SEAL & STAMP</div>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1">AUTHORIZED AGENCY SEAL</p>
+                <div className="h-20 print:h-16 border border-dashed border-green-600/40 rounded-xl bg-green-50/50 flex flex-col items-center justify-center text-center p-1.5">
+                  <div className="border border-green-700 bg-white/90 rounded px-2.5 py-0.5 text-green-800 font-extrabold text-[10px] uppercase tracking-widest rotate-[-2deg] shadow-sm flex items-center space-x-1">
+                    <ShieldCheck size={12} className="text-green-700 inline mr-0.5" />
+                    <span>VERIFIED BY SW TECH SOLUTION</span>
                   </div>
-                  <p className="text-[9px] text-slate-500 mt-2">Garima Studio, Ambedkarnagar UP</p>
+                  <p className="text-[7.5px] font-bold text-green-900 mt-0.5">Garima Studio, Ambedkarnagar UP • Govt Reg. Compliant</p>
                 </div>
               </div>
-              <p className="text-[10px] text-slate-600 font-bold mt-2">Authorized Signatory  SW Tech Solution</p>
+              <p className="text-[9px] text-slate-600 font-bold mt-1">Authorized Signatory • SW Tech Solution</p>
             </div>
 
           </div>
 
-          {/* CLIENT ACCEPTANCE ACTION BAR */}
-          <div className="print:hidden mt-8 pt-6 border-t border-slate-200">
+          {/* CLIENT ACCEPTANCE ACTION BAR (HIDDEN IN PRINT) */}
+          <div className="print:hidden mt-6 pt-4 border-t border-slate-200">
             {!isSignedSubmitted ? (
-              <div className="space-y-4">
-                <label className="flex items-start space-x-3 cursor-pointer p-4 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-colors">
+              <div className="space-y-3">
+                <label className="flex items-start space-x-3 cursor-pointer p-3 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-colors">
                   <input
                     type="checkbox"
                     checked={isAgreed}
@@ -357,44 +382,44 @@ function SignContractComponent() {
                     className="mt-1 h-4 w-4 text-orange-600 rounded border-slate-300 focus:ring-orange-500"
                   />
                   <span className="text-xs text-slate-700 leading-relaxed">
-                    I, <strong>{clientName}</strong>, hereby accept the deliverables, pricing of ?{dealAmount} (Advance: ?{advancePaid}, Due: ?{balanceRemaining}), and terms outlined in this agreement by SW Tech Solution.
+                    I, <strong>{clientName}</strong>, hereby accept the deliverables, pricing of ₹{dealAmount} (Advance: ₹{advancePaid}, Due: ₹{balanceRemaining}), and terms outlined in this agreement by SW Tech Solution.
                   </span>
                 </label>
 
                 <button
                   onClick={handleSubmitSign}
-                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-base transition-all shadow-xl shadow-orange-500/20 flex items-center justify-center space-x-2"
+                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-sm transition-all shadow-xl shadow-orange-500/20 flex items-center justify-center space-x-2"
                 >
-                  <CheckCircle2 size={20} />
+                  <CheckCircle2 size={18} />
                   <span>Accept & Digitally Sign Agreement</span>
                 </button>
               </div>
             ) : (
-              <div className="p-6 rounded-2xl bg-green-50 border border-green-200 text-center space-y-4">
-                <div className="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center mx-auto shadow-lg">
-                  <Check size={24} />
+              <div className="p-4 rounded-2xl bg-green-50 border border-green-200 text-center space-y-3">
+                <div className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center mx-auto shadow-lg">
+                  <Check size={20} />
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-green-900">Contract Successfully Signed!</h4>
-                  <p className="text-xs text-green-700 mt-1">
+                  <h4 className="text-base font-bold text-green-900">Contract Successfully Signed!</h4>
+                  <p className="text-xs text-green-700 mt-0.5">
                     Thank you! Your signed copy has been registered with SW Tech Solution.
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-1">
                   <button
                     onClick={sendConfirmationWhatsApp}
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-xs transition-colors flex items-center justify-center space-x-2 shadow"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-xs transition-colors flex items-center justify-center space-x-2 shadow"
                   >
                     <Send size={14} />
                     <span>Send Signed Receipt to WhatsApp</span>
                   </button>
                   <button
                     onClick={() => window.print()}
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors flex items-center justify-center space-x-2"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors flex items-center justify-center space-x-2"
                   >
                     <Printer size={14} />
-                    <span>Download Signed PDF</span>
+                    <span>Download Signed PDF (1-Page)</span>
                   </button>
                 </div>
               </div>

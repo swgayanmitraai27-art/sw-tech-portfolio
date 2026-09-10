@@ -255,11 +255,11 @@ export default function PortalDealMaker() {
       '----------------------------------------\n' +
       'Dear Client, your 1-Year Cloud Hosting, Domain & Business Email cycle is scheduled for renewal.\n\n' +
       '*RENEWAL PACKAGE DETAILS:*\n' +
-      '1. 1 Year Domain Extension (.com/.in): ?999\n' +
-      '2. 1 Year High-Speed Cloud Server Hosting: ?1,499\n' +
-      '3. 5 Professional Email Accounts Maintenance: ?499\n' +
-      '4. 24/7 Security Patching & Bug Fixes: ?999\n\n' +
-      '*Total Annual Renewal Bundle: ?3,999/-* (Discounted rate)\n' +
+      '1. 1 Year Domain Extension (.com/.in): ₹999\n' +
+      '2. 1 Year High-Speed Cloud Server Hosting: ₹1,499\n' +
+      '3. 5 Professional Email Accounts Maintenance: ₹499\n' +
+      '4. 24/7 Security Patching & Bug Fixes: ₹999\n\n' +
+      '*Total Annual Renewal Bundle: ₹3,999/-* (Discounted rate)\n' +
       'Pay UPI: ' + upiId + '\n\n' +
       'To keep your website live without interruption, please confirm renewal.\n' +
       'Thank you,\n' +
@@ -516,45 +516,45 @@ export default function PortalDealMaker() {
             </div>
 
             {/* PRINTABLE AGREEMENT DOCUMENT */}
-            <div className="bg-white text-slate-900 p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-200 max-w-4xl mx-auto print:p-0 print:border-none print:shadow-none print:m-0">
+            <div className="bg-white text-slate-900 p-6 sm:p-10 rounded-3xl shadow-2xl border border-slate-200 max-w-4xl mx-auto print:p-2 print:border-none print:shadow-none print:m-0 print:rounded-none">
               
               {/* HEADER */}
-              <div className="flex justify-between items-start border-b-2 border-slate-900 pb-6 mb-8">
+              <div className="flex justify-between items-start border-b-2 border-slate-900 pb-3 mb-3 print:pb-2 print:mb-2">
                 <div>
-                  <span className="text-2xl sm:text-3xl font-serif font-black tracking-tight text-orange-600">
+                  <span className="text-2xl sm:text-3xl print:text-xl font-serif font-black tracking-tight text-orange-600">
                     SW TECH SOLUTION
                   </span>
-                  <p className="text-xs uppercase tracking-widest text-slate-600 font-bold mt-1">
+                  <p className="text-[11px] uppercase tracking-widest text-slate-600 font-bold mt-0.5">
                     Software Development & Digital Architecture Agency
                   </p>
-                  <p className="text-xs text-slate-600 mt-1">
+                  <p className="text-[10px] text-slate-600">
                     Garima Studio, Neori Bajar, Ramnagar Road, Ambedkarnagar, UP
                   </p>
-                  <p className="text-xs text-slate-600">
-                    Phone / WhatsApp: +91 8303994616  UPI: {upiId}
+                  <p className="text-[10px] text-slate-600">
+                    Phone / WhatsApp: +91 8303994616 • UPI: {upiId}
                   </p>
                 </div>
-                <div className="text-right">
-                  <div className="inline-block bg-slate-900 text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider mb-2">
+                <div className="text-right shrink-0">
+                  <div className="inline-block bg-slate-900 text-white px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider mb-1 print:bg-slate-900 print:text-white">
                     Official Project Contract
                   </div>
-                  <p className="text-xs font-bold text-slate-700">Agreement No: {invoiceNumber}</p>
-                  <p className="text-xs text-slate-500">Date: {dealDate}</p>
+                  <p className="text-[11px] font-bold text-slate-800">Agreement No: {invoiceNumber}</p>
+                  <p className="text-[10px] text-slate-500">Date: {dealDate}</p>
                 </div>
               </div>
 
               {/* CLIENT DETAILS */}
-              <div className="grid grid-cols-2 gap-6 p-4 rounded-xl bg-slate-50 border border-slate-200 mb-8 text-xs">
+              <div className="grid grid-cols-2 gap-4 p-3 rounded-xl bg-slate-50 border border-slate-200 mb-3 print:p-2 print:mb-2 text-xs print:text-[10.5px]">
                 <div>
-                  <p className="text-slate-400 font-bold uppercase text-[10px] tracking-wider mb-1">CLIENT INFORMATION</p>
-                  <p className="text-sm font-bold text-slate-900">{clientName}</p>
+                  <p className="text-slate-400 font-bold uppercase text-[9px] tracking-wider mb-0.5">CLIENT INFORMATION</p>
+                  <p className="text-sm print:text-xs font-bold text-slate-900">{clientName}</p>
                   <p className="font-semibold text-slate-700">{businessName}</p>
                   <p className="text-slate-600">{clientAddress}</p>
                   <p className="text-slate-600">Ph: +91 {clientPhone} | Email: {clientEmail}</p>
                 </div>
                 <div>
-                  <p className="text-slate-400 font-bold uppercase text-[10px] tracking-wider mb-1">PROJECT & TIMELINE</p>
-                  <p className="text-sm font-bold text-orange-600">
+                  <p className="text-slate-400 font-bold uppercase text-[9px] tracking-wider mb-0.5">PROJECT & TIMELINE</p>
+                  <p className="text-sm print:text-xs font-bold text-orange-600">
                     {selectedPackage === 'website' ? '5-Page High-Conversion Business Website' : selectedPackage === 'webapp' ? 'Custom Full-Stack Web Application' : selectedPackage === 'android' ? 'Android Mobile App (Play Store Publishing)' : customPackageName}
                   </p>
                   <p className="text-slate-700"><strong>Target Domain:</strong> {domainName}</p>
@@ -564,13 +564,13 @@ export default function PortalDealMaker() {
               </div>
 
               {/* SCOPE OF WORK */}
-              <div className="mb-8">
-                <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b pb-2 mb-3">
+              <div className="mb-3 print:mb-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 border-b pb-1 mb-1.5 print:pb-0.5 print:mb-1">
                   1. Scope of Work & Deliverables
                 </h4>
-                <ul className="text-xs text-slate-700 space-y-2 list-disc pl-5 leading-relaxed">
+                <ul className="text-[11px] print:text-[9.5px] text-slate-700 space-y-1 print:space-y-0.5 list-disc pl-4 leading-tight">
                   <li><strong>Custom Design & Development:</strong> Bespoke responsive layout tailored for {businessName}, optimized for ultra-fast load speed and mobile screens.</li>
-                  <li><strong>Free Domain & Hosting:</strong> 1 Year of top-level Domain registration ({domainName}) + 1 Year High-Speed Cloud Server Hosting.</li>
+                  <li><strong>Free Domain & Hosting:</strong> 1 Year top-level Domain ({domainName}) + 1 Year High-Speed Cloud Server Hosting.</li>
                   <li><strong>Business Email Setup:</strong> Up to 5 professional domain-branded mail accounts (e.g. contact@{domainName}).</li>
                   <li><strong>Security & SSL:</strong> Full HTTPS SSL Certificate configuration and automated protection against attacks.</li>
                   {selectedPackage === 'android' && (
@@ -587,75 +587,75 @@ export default function PortalDealMaker() {
               </div>
 
               {/* COMMERCIALS */}
-              <div className="mb-8">
-                <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b pb-2 mb-3">
+              <div className="mb-3 print:mb-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 border-b pb-1 mb-1.5 print:pb-0.5 print:mb-1">
                   2. Commercials & Payment Terms
                 </h4>
-                <table className="w-full text-xs text-left border border-slate-200">
+                <table className="w-full text-xs print:text-[10px] text-left border border-slate-200">
                   <thead className="bg-slate-100 text-slate-800">
                     <tr>
-                      <th className="p-2 border">Service Description</th>
-                      <th className="p-2 border text-center">Qty / Period</th>
-                      <th className="p-2 border text-right">Amount (?)</th>
+                      <th className="p-1.5 print:p-1 border">Service Description</th>
+                      <th className="p-1.5 print:p-1 border text-center">Qty / Period</th>
+                      <th className="p-1.5 print:p-1 border text-right">Amount (₹)</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="p-2 border font-medium">
-                        {selectedPackage === 'website' ? '5-Page Website (Website Dev FREE  ?1,999 Server/Domain Fee)' : selectedPackage === 'webapp' ? 'Custom Web Application Engineering' : selectedPackage === 'android' ? 'Android Mobile App + 1 Free Website' : customPackageName}
+                      <td className="p-1.5 print:p-1 border font-medium">
+                        {selectedPackage === 'website' ? '5-Page Website (Website Dev FREE • ₹1,999 Server/Domain Fee)' : selectedPackage === 'webapp' ? 'Custom Web Application Engineering' : selectedPackage === 'android' ? 'Android Mobile App + 1 Free Website' : customPackageName}
                       </td>
-                      <td className="p-2 border text-center">1 Year</td>
-                      <td className="p-2 border text-right font-bold">?{dealAmount}</td>
+                      <td className="p-1.5 print:p-1 border text-center">1 Year</td>
+                      <td className="p-1.5 print:p-1 border text-right font-bold">₹{dealAmount}</td>
                     </tr>
                     {selectedAddons.map(id => {
                       const found = addonList.find(a => a.id === id);
                       return found ? (
                         <tr key={id}>
-                          <td className="p-2 border">{found.name}</td>
-                          <td className="p-2 border text-center">1 Item</td>
-                          <td className="p-2 border text-right">₹{found.price}</td>
+                          <td className="p-1.5 print:p-1 border">{found.name}</td>
+                          <td className="p-1.5 print:p-1 border text-center">1 Item</td>
+                          <td className="p-1.5 print:p-1 border text-right">₹{found.price}</td>
                         </tr>
                       ) : null;
                     })}
                     {discountAmount > 0 && (
                       <tr className="text-green-700 font-bold bg-green-50">
-                        <td className="p-2 border text-right" colSpan={2}>Special Promotional Discount:</td>
-                        <td className="p-2 border text-right">-₹{discountAmount}</td>
+                        <td className="p-1.5 print:p-1 border text-right" colSpan={2}>Special Promotional Discount:</td>
+                        <td className="p-1.5 print:p-1 border text-right">-₹{discountAmount}</td>
                       </tr>
                     )}
                     <tr className="bg-slate-50 font-bold">
-                      <td className="p-2 border text-right" colSpan={2}>Grand Total Deal Value:</td>
-                      <td className="p-2 border text-right text-sm">₹{grandTotal}</td>
+                      <td className="p-1.5 print:p-1 border text-right" colSpan={2}>Grand Total Deal Value:</td>
+                      <td className="p-1.5 print:p-1 border text-right">₹{grandTotal}</td>
                     </tr>
                     <tr className="text-green-700 font-bold">
-                      <td className="p-2 border text-right" colSpan={2}>Advance Paid / Received:</td>
-                      <td className="p-2 border text-right">₹{advancePaid}</td>
+                      <td className="p-1.5 print:p-1 border text-right" colSpan={2}>Advance Paid / Received:</td>
+                      <td className="p-1.5 print:p-1 border text-right">₹{advancePaid}</td>
                     </tr>
-                    <tr className="bg-orange-50 text-orange-900 font-bold text-sm">
-                      <td className="p-2 border text-right" colSpan={2}>Balance Due on Final Delivery & Handover:</td>
-                      <td className="p-2 border text-right">₹{balanceRemaining}</td>
+                    <tr className="bg-orange-50 text-orange-900 font-bold">
+                      <td className="p-1.5 print:p-1 border text-right" colSpan={2}>Balance Due on Final Delivery & Handover:</td>
+                      <td className="p-1.5 print:p-1 border text-right">₹{balanceRemaining}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
               {/* TERMS */}
-              <div className="mb-8 text-[10px] text-slate-600 leading-normal space-y-1 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                <p className="font-bold text-slate-800 uppercase text-[11px] mb-1">3. Key Terms & Guarantees:</p>
+              <div className="mb-3 print:mb-2 text-[10px] print:text-[9px] text-slate-600 leading-tight space-y-0.5 bg-slate-50 p-2.5 print:p-1.5 rounded-xl border border-slate-200">
+                <p className="font-bold text-slate-800 uppercase text-[10px] print:text-[9px] mb-0.5">3. Key Terms & Guarantees:</p>
                 <p>• <strong>Timely Delivery:</strong> SW Tech Solution commits to delivering the primary prototype within {deliveryDays}.</p>
-                <p>• <strong>Annual Renewals:</strong> Domain and Cloud Server are valid for 1 full year from creation. Subsequent year renewals are charged at prevailing registry and hosting costs (Bundle: ₹3,999/yr).</p>
+                <p>• <strong>Annual Renewals:</strong> Domain and Cloud Server are valid for 1 full year. Year 2 renewals are charged at standard server/domain bundle rates (₹3,999/yr).</p>
                 <p>• <strong>Content & Approvals:</strong> Client shall provide required business logos, phone numbers, and photos. Minor revisions are completed at zero extra cost.</p>
                 <p>• <strong>Handover:</strong> Admin credentials and ownership are fully transferred once the final balance of ₹{balanceRemaining} is settled.</p>
               </div>
 
               {/* SIGNATURE SECTION WITH GREEN VERIFIED STAMP & ONLINE AGENCY SIGNATURE */}
-              <div className="grid grid-cols-2 gap-8 pt-6 border-t-2 border-slate-300">
+              <div className="grid grid-cols-2 gap-4 pt-2.5 border-t-2 border-slate-300 print:break-inside-avoid print:pt-1.5">
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">CLIENT SIGNATURE & ACCEPTANCE</p>
-                  <div className="h-28 border border-dashed border-slate-300 rounded-xl bg-slate-50 flex flex-col items-center justify-center text-center p-3">
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1">CLIENT SIGNATURE & ACCEPTANCE</p>
+                  <div className="h-20 print:h-16 border border-dashed border-slate-300 rounded-xl bg-slate-50 flex flex-col items-center justify-center text-center p-2">
                     <p className="text-xs font-bold text-slate-800">{clientName}</p>
-                    <p className="text-[11px] text-slate-600 font-medium">{businessName}</p>
-                    <p className="text-[9px] text-slate-400 mt-1">Signable online via Client Link</p>
+                    <p className="text-[10px] text-slate-600 font-medium">{businessName}</p>
+                    <p className="text-[8.5px] text-slate-400 mt-0.5">Signable online via Client Link</p>
                   </div>
                   <div className="flex justify-between items-center mt-1">
                     <span className="text-[10px] text-slate-600 font-bold">{clientName} ({businessName})</span>
@@ -670,23 +670,23 @@ export default function PortalDealMaker() {
                     >
                       Clear Sign
                     </button>
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">AUTHORIZED AGENCY SIGNATURE & SEAL</p>
+                    <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500">AUTHORIZED AGENCY SIGNATURE & SEAL</p>
                   </div>
 
                   {/* GREEN EMBOSSED STAMP + SIGNATURE PAD */}
-                  <div className="relative h-28 border-2 border-dashed border-green-600/40 rounded-xl bg-green-50/50 flex items-center justify-center overflow-hidden">
+                  <div className="relative h-20 print:h-16 border-2 border-dashed border-green-600/40 rounded-xl bg-green-50/50 flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 flex flex-col items-center justify-center opacity-80 pointer-events-none select-none">
-                      <div className="border-2 border-green-700 bg-white/80 rounded-lg px-4 py-1 text-green-800 font-extrabold text-[11px] uppercase tracking-widest rotate-[-3deg] shadow-sm flex items-center space-x-1">
-                        <ShieldCheck size={14} className="text-green-700 inline mr-1" />
+                      <div className="border border-green-700 bg-white/90 rounded px-2.5 py-0.5 text-green-800 font-extrabold text-[10px] uppercase tracking-widest rotate-[-2deg] shadow-sm flex items-center space-x-1">
+                        <ShieldCheck size={12} className="text-green-700 inline mr-0.5" />
                         <span>VERIFIED BY SW TECH SOLUTION</span>
                       </div>
-                      <p className="text-[8px] font-bold text-green-900 mt-0.5 tracking-wider">GARIMA STUDIO, AMBEDKARNAGAR UP • GOVT REG. COMPLIANT</p>
+                      <p className="text-[7.5px] font-bold text-green-900 mt-0.5 tracking-wider">GARIMA STUDIO, AMBEDKARNAGAR UP • GOVT REG. COMPLIANT</p>
                     </div>
 
                     <canvas
                       ref={agencyCanvasRef}
                       width={320}
-                      height={110}
+                      height={80}
                       onMouseDown={startAgencyDrawing}
                       onMouseMove={drawAgency}
                       onMouseUp={stopAgencyDrawing}
@@ -697,7 +697,7 @@ export default function PortalDealMaker() {
                       className="cursor-crosshair w-full h-full relative z-10"
                     />
                   </div>
-                  <p className="text-[10px] text-green-900 font-bold mt-1">Authorized Signatory • SW Tech Solution</p>
+                  <p className="text-[9px] text-green-900 font-bold mt-1">Authorized Signatory • SW Tech Solution</p>
                 </div>
               </div>
 
@@ -722,33 +722,33 @@ export default function PortalDealMaker() {
             </div>
 
             {/* INVOICE PAPER */}
-            <div className="bg-white text-slate-900 p-8 sm:p-12 rounded-3xl shadow-2xl border border-slate-200 max-w-4xl mx-auto print:p-0 print:border-none print:shadow-none">
+            <div className="bg-white text-slate-900 p-6 sm:p-10 rounded-3xl shadow-2xl border border-slate-200 max-w-4xl mx-auto print:p-2 print:border-none print:shadow-none print:rounded-none">
               
-              <div className="flex justify-between items-start border-b-2 border-slate-900 pb-6 mb-8">
+              <div className="flex justify-between items-start border-b-2 border-slate-900 pb-3 mb-3 print:pb-2 print:mb-2">
                 <div>
-                  <h2 className="text-3xl font-serif font-black text-orange-600 tracking-tight">SW TECH SOLUTION</h2>
-                  <p className="text-xs text-slate-600 mt-1">Garima Studio, Neori Bajar, Ramnagar Road, Ambedkarnagar, UP</p>
-                  <p className="text-xs text-slate-600">Phone: +91 8303994616  Email: swgayanmitraai27@gmail.com</p>
+                  <h2 className="text-2xl sm:text-3xl print:text-xl font-serif font-black text-orange-600 tracking-tight">SW TECH SOLUTION</h2>
+                  <p className="text-[10px] text-slate-600 mt-0.5">Garima Studio, Neori Bajar, Ramnagar Road, Ambedkarnagar, UP</p>
+                  <p className="text-[10px] text-slate-600">Phone: +91 8303994616 • Email: swgayanmitraai27@gmail.com</p>
                 </div>
-                <div className="text-right">
-                  <span className="text-2xl font-serif font-black text-slate-900 tracking-wider">TAX INVOICE</span>
-                  <p className="text-xs font-bold text-slate-700 mt-1">Invoice #: {invoiceNumber}</p>
-                  <p className="text-xs text-slate-500">Invoice Date: {dealDate}</p>
-                  <p className="text-xs text-slate-500">Payment Status: <span className={'font-bold ' + (balanceRemaining === 0 ? 'text-green-600' : 'text-orange-600')}>{balanceRemaining === 0 ? 'FULLY PAID' : 'PARTIAL / ADVANCE PAID'}</span></p>
+                <div className="text-right shrink-0">
+                  <span className="text-xl print:text-lg font-serif font-black text-slate-900 tracking-wider">TAX INVOICE</span>
+                  <p className="text-[11px] font-bold text-slate-700 mt-0.5">Invoice #: {invoiceNumber}</p>
+                  <p className="text-[10px] text-slate-500">Invoice Date: {dealDate}</p>
+                  <p className="text-[10px] text-slate-500">Payment Status: <span className={'font-bold ' + (balanceRemaining === 0 ? 'text-green-600' : 'text-orange-600')}>{balanceRemaining === 0 ? 'FULLY PAID' : 'PARTIAL / ADVANCE PAID'}</span></p>
                 </div>
               </div>
 
               {/* INVOICE BILL TO */}
-              <div className="grid grid-cols-2 gap-6 p-4 rounded-xl bg-slate-50 border border-slate-200 mb-8 text-xs">
+              <div className="grid grid-cols-2 gap-4 p-3 rounded-xl bg-slate-50 border border-slate-200 mb-3 print:p-2 print:mb-2 text-xs print:text-[10.5px]">
                 <div>
-                  <p className="text-slate-400 font-bold uppercase text-[10px] tracking-wider mb-1">INVOICED TO:</p>
-                  <p className="text-base font-bold text-slate-900">{clientName}</p>
+                  <p className="text-slate-400 font-bold uppercase text-[9px] tracking-wider mb-0.5">INVOICED TO:</p>
+                  <p className="text-sm print:text-xs font-bold text-slate-900">{clientName}</p>
                   <p className="font-semibold text-slate-700">{businessName}</p>
                   <p className="text-slate-600">{clientAddress}</p>
                   <p className="text-slate-600">Ph: +91 {clientPhone}</p>
                 </div>
                 <div>
-                  <p className="text-slate-400 font-bold uppercase text-[10px] tracking-wider mb-1">PAYMENT & PROJECT REF:</p>
+                  <p className="text-slate-400 font-bold uppercase text-[9px] tracking-wider mb-0.5">PAYMENT & PROJECT REF:</p>
                   <p className="text-slate-700"><strong>Domain:</strong> {domainName}</p>
                   <p className="text-slate-700"><strong>Timeline:</strong> {deliveryDays}</p>
                   <p className="text-slate-700"><strong>Payment Mode:</strong> UPI / Online Transfer ({upiId})</p>
@@ -756,35 +756,35 @@ export default function PortalDealMaker() {
               </div>
 
               {/* INVOICE ITEMS */}
-              <table className="w-full text-xs text-left border border-slate-200 mb-6">
+              <table className="w-full text-xs print:text-[10px] text-left border border-slate-200 mb-3 print:mb-2">
                 <thead className="bg-slate-900 text-white">
                   <tr>
-                    <th className="p-3 border border-slate-800">#</th>
-                    <th className="p-3 border border-slate-800">Description of Service</th>
-                    <th className="p-3 border border-slate-800 text-center">Validity</th>
-                    <th className="p-3 border border-slate-800 text-right">Rate (?)</th>
-                    <th className="p-3 border border-slate-800 text-right">Total (?)</th>
+                    <th className="p-1.5 print:p-1 border border-slate-800">#</th>
+                    <th className="p-1.5 print:p-1 border border-slate-800">Description of Service</th>
+                    <th className="p-1.5 print:p-1 border border-slate-800 text-center">Validity</th>
+                    <th className="p-1.5 print:p-1 border border-slate-800 text-right">Rate (₹)</th>
+                    <th className="p-1.5 print:p-1 border border-slate-800 text-right">Total (₹)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200">
                   <tr>
-                    <td className="p-3 border text-center">1</td>
-                    <td className="p-3 border font-medium">
-                      {selectedPackage === 'website' ? '5-Page Website (Website Dev 100% FREE  ?1,999 Server/Domain Fee)' : selectedPackage === 'webapp' ? 'Full-Stack Custom Web App with Database & Admin Dashboard' : selectedPackage === 'android' ? 'Android Mobile App Deployment on Google Play Store + 1 Free Website' : customPackageName}
+                    <td className="p-1.5 print:p-1 border text-center">1</td>
+                    <td className="p-1.5 print:p-1 border font-medium">
+                      {selectedPackage === 'website' ? '5-Page Website (Website Dev 100% FREE • ₹1,999 Server/Domain Fee)' : selectedPackage === 'webapp' ? 'Full-Stack Custom Web App with Database & Admin Dashboard' : selectedPackage === 'android' ? 'Android Mobile App Deployment on Google Play Store + 1 Free Website' : customPackageName}
                     </td>
-                    <td className="p-3 border text-center">1 Year</td>
-                    <td className="p-3 border text-right">?{dealAmount}</td>
-                    <td className="p-3 border text-right font-bold">?{dealAmount}</td>
+                    <td className="p-1.5 print:p-1 border text-center">1 Year</td>
+                    <td className="p-1.5 print:p-1 border text-right">₹{dealAmount}</td>
+                    <td className="p-1.5 print:p-1 border text-right font-bold">₹{dealAmount}</td>
                   </tr>
                   {selectedAddons.map((id, index) => {
                     const found = addonList.find(a => a.id === id);
                     return found ? (
                       <tr key={id}>
-                        <td className="p-3 border text-center">{index + 2}</td>
-                        <td className="p-3 border">{found.name}</td>
-                        <td className="p-3 border text-center">Lifetime</td>
-                        <td className="p-3 border text-right">?{found.price}</td>
-                        <td className="p-3 border text-right font-bold">?{found.price}</td>
+                        <td className="p-1.5 print:p-1 border text-center">{index + 2}</td>
+                        <td className="p-1.5 print:p-1 border">{found.name}</td>
+                        <td className="p-1.5 print:p-1 border text-center">Lifetime</td>
+                        <td className="p-1.5 print:p-1 border text-right">₹{found.price}</td>
+                        <td className="p-1.5 print:p-1 border text-right font-bold">₹{found.price}</td>
                       </tr>
                     ) : null;
                   })}
@@ -792,39 +792,39 @@ export default function PortalDealMaker() {
               </table>
 
               {/* INVOICE TOTALS */}
-              <div className="flex justify-between items-start">
-                <div className="text-xs text-slate-600 max-w-xs space-y-1">
+              <div className="flex justify-between items-start text-xs print:text-[10px]">
+                <div className="text-slate-600 max-w-xs space-y-0.5">
                   <p className="font-bold text-slate-800">Bank & Payment Details:</p>
                   <p>UPI ID: <strong>{upiId}</strong></p>
                   <p>Bank: State Bank of India / Paytm Payments Bank</p>
                   <p>Account Holder: SW Tech Solution</p>
                 </div>
 
-                <div className="w-64 space-y-2 text-xs">
-                  <div className="flex justify-between py-1 border-b text-slate-700">
+                <div className="w-60 space-y-1 text-xs print:text-[10px]">
+                  <div className="flex justify-between py-0.5 border-b text-slate-700">
                     <span>Subtotal:</span>
-                    <span>?{grandTotal}</span>
+                    <span>₹{grandTotal}</span>
                   </div>
-                  <div className="flex justify-between py-1 border-b text-green-700 font-bold">
+                  <div className="flex justify-between py-0.5 border-b text-green-700 font-bold">
                     <span>Advance Received:</span>
-                    <span>?{advancePaid}</span>
+                    <span>₹{advancePaid}</span>
                   </div>
-                  <div className="flex justify-between py-2 border-b-2 border-slate-900 text-sm font-black text-slate-900 bg-slate-50 px-2 rounded">
+                  <div className="flex justify-between py-1 border-b-2 border-slate-900 font-black text-slate-900 bg-slate-50 px-1.5 rounded">
                     <span>Balance Due:</span>
-                    <span>?{balanceRemaining}</span>
+                    <span>₹{balanceRemaining}</span>
                   </div>
                 </div>
               </div>
 
               {/* FOOTER */}
-              <div className="mt-12 pt-6 border-t border-slate-200 flex justify-between items-end text-xs text-slate-500">
+              <div className="mt-6 pt-3 border-t border-slate-200 flex justify-between items-end text-xs print:text-[10px] text-slate-500 print:break-inside-avoid">
                 <div>
                   <p className="font-semibold text-slate-700">Thank you for partnering with SW Tech Solution!</p>
-                  <p className="text-[10px]">For queries: +91 8303994616  swgayanmitraai27@gmail.com</p>
+                  <p className="text-[9px]">For queries: +91 8303994616 • swgayanmitraai27@gmail.com</p>
                 </div>
                 <div className="text-right">
-                  <div className="h-12 border-b border-slate-400 w-40 mb-1"></div>
-                  <p className="font-bold text-slate-800">Authorized Signatory</p>
+                  <div className="h-8 border-b border-slate-400 w-36 mb-1"></div>
+                  <p className="font-bold text-slate-800 text-[10px]">Authorized Signatory</p>
                 </div>
               </div>
 
