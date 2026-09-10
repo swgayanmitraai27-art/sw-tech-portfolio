@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   FileText,
   CreditCard,
@@ -18,15 +18,50 @@ import {
   Copy,
   Check,
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  Search,
+  Users,
+  Calendar,
+  Clock,
+  ExternalLink,
+  Trash2,
+  Download,
+  Upload,
+  ArrowRight,
+  DollarSign,
+  Key,
+  BadgeCheck
 } from 'lucide-react';
+
+interface ClientRecord {
+  id: string;
+  clientName: string;
+  businessName: string;
+  clientPhone: string;
+  clientEmail: string;
+  clientAddress: string;
+  selectedPackage: string;
+  customPackageName: string;
+  dealAmount: number;
+  discountAmount: number;
+  advancePaid: number;
+  balanceRemaining: number;
+  deliveryDays: string;
+  invoiceNumber: string;
+  dealDate: string;
+  expiryDate: string;
+  domainName: string;
+  selectedAddons: string[];
+  projectStage: 'development' | 'testing' | 'delivered' | 'amc';
+  isBalancePaid: boolean;
+}
 
 export default function PortalDealMaker() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passcode, setPasscode] = useState('');
   const [passcodeError, setPasscodeError] = useState(false);
 
-  const [activeTab, setActiveTab] = useState('agreement');
+  const [activeTab, setActiveTab] = useState<'agreement' | 'invoice' | 'renewal' | 'addons' | 'crm'>('agreement');
 
   const [clientName, setClientName] = useState('Rahul Sharma');
   const [businessName, setBusinessName] = useState('Sharma Sweets');
@@ -44,7 +79,11 @@ export default function PortalDealMaker() {
   const [dealDate, setDealDate] = useState('2026-09-10');
   const [domainName, setDomainName] = useState('sharmasweets.in');
   const [upiId, setUpiId] = useState('8303994616@paytm');
+  const [projectStage, setProjectStage] = useState<'development' | 'testing' | 'delivered' | 'amc'>('development');
+  const [isBalancePaid, setIsBalancePaid] = useState(false);
+
   const [copiedNotice, setCopiedNotice] = useState(false);
+  const [saveToast, setSaveToast] = useState(false);
 
   const agencyCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isAgencyDrawing, setIsAgencyDrawing] = useState(false);
@@ -63,6 +102,86 @@ export default function PortalDealMaker() {
 
   const [newAddonName, setNewAddonName] = useState('');
   const [newAddonPrice, setNewAddonPrice] = useState(999);
+
+  // CRM STATE & PERSISTENCE
+  const [savedClients, setSavedClients] = useState<ClientRecord[]>([]);
+  const [crmSearchQuery, setCrmSearchQuery] = useState('');
+  const [crmFilterPackage, setCrmFilterPackage] = useState('all');
+  const [crmFilterStage, setCrmFilterStage] = useState('all');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedAuth = localStorage.getItem('swtech_portal_auth');
+      if (savedAuth === 'true') {
+        setIsAuthenticated(true);
+      }
+
+      const rawClients = localStorage.getItem('swtech_crm_clients');
+      if (rawClients) {
+        try {
+          setSavedClients(JSON.parse(rawClients));
+        } catch (e) {
+          console.error('Error reading CRM storage', e);
+        }
+      } else {
+        const sample: ClientRecord[] = [
+          {
+            id: 'SWTS-2026-849',
+            clientName: 'Rahul Sharma',
+            businessName: 'Sharma Sweets',
+            clientPhone: '9876543210',
+            clientEmail: 'sharma.business@gmail.com',
+            clientAddress: 'Shop No. 12, Main Market, Ambedkar Nagar, UP',
+            selectedPackage: 'website',
+            customPackageName: '5-Page High-Conversion Business Website',
+            dealAmount: 1999,
+            discountAmount: 0,
+            advancePaid: 1000,
+            balanceRemaining: 999,
+            deliveryDays: '24 Hours',
+            invoiceNumber: 'SWTS-2026-849',
+            dealDate: '2026-09-10',
+            expiryDate: '2027-09-10',
+            domainName: 'sharmasweets.in',
+            selectedAddons: [],
+            projectStage: 'development',
+            isBalancePaid: false
+          },
+          {
+            id: 'SWTS-2026-722',
+            clientName: 'Amit Verma',
+            businessName: 'Verma Coaching Classes',
+            clientPhone: '8877665544',
+            clientEmail: 'verma.coaching@gmail.com',
+            clientAddress: 'Neori Bajar, Ramnagar Road, Ambedkar Nagar',
+            selectedPackage: 'webapp',
+            customPackageName: 'Student Portal & Exam System',
+            dealAmount: 4499,
+            discountAmount: 500,
+            advancePaid: 2000,
+            balanceRemaining: 1999,
+            deliveryDays: '7 Days (With Full Testing)',
+            invoiceNumber: 'SWTS-2026-722',
+            dealDate: '2026-08-15',
+            expiryDate: '2027-08-15',
+            domainName: 'vermacoaching.com',
+            selectedAddons: ['whatsapp_bot'],
+            projectStage: 'delivered',
+            isBalancePaid: true
+          }
+        ];
+        setSavedClients(sample);
+        localStorage.setItem('swtech_crm_clients', JSON.stringify(sample));
+      }
+    }
+  }, []);
+
+  const syncClientsToStorage = (newList: ClientRecord[]) => {
+    setSavedClients(newList);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('swtech_crm_clients', JSON.stringify(newList));
+    }
+  };
 
   const handleAddCustomAddon = () => {
     if (!newAddonName.trim()) return;
@@ -94,15 +213,6 @@ export default function PortalDealMaker() {
       setDeliveryDays('30 Days (Including Google 14-day Testing)');
     }
   };
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('swtech_portal_auth');
-      if (saved === 'true') {
-        setIsAuthenticated(true);
-      }
-    }
-  }, []);
 
   const handleLogin = (e: any) => {
     e.preventDefault();
@@ -170,14 +280,147 @@ export default function PortalDealMaker() {
     return sum + (found ? found.price : 0);
   }, 0);
 
-  const subtotalBeforeDiscount = dealAmount + addonsTotal;
+  const subtotalBeforeDiscount = Number(dealAmount || 0) + addonsTotal;
   const grandTotal = Math.max(0, subtotalBeforeDiscount - (Number(discountAmount) || 0));
-  const balanceRemaining = Math.max(0, grandTotal - (Number(advancePaid) || 0));
+  const effectiveAdvance = Math.min(grandTotal, Number(advancePaid || 0));
+  const balanceRemaining = isBalancePaid ? 0 : Math.max(0, grandTotal - effectiveAdvance);
+
+  const calculateExpiry = (dateStr: string) => {
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return '2027-09-10';
+      d.setFullYear(d.getFullYear() + 1);
+      return d.toISOString().split('T')[0];
+    } catch {
+      return '2027-09-10';
+    }
+  };
+
+  const currentExpiryDate = calculateExpiry(dealDate);
+
+  // Financial Stats
+  const totalDealsCount = savedClients.length;
+  const totalGrossRevenue = savedClients.reduce((acc, c) => acc + Number(c.dealAmount || 0), 0);
+  const totalAdvanceCollected = savedClients.reduce((acc, c) => acc + Number(c.advancePaid || 0), 0);
+  const totalPendingBalance = savedClients.reduce((acc, c) => acc + (c.isBalancePaid ? 0 : Number(c.balanceRemaining || 0)), 0);
+  const totalAnnualRenewalsPipeline = savedClients.length * 3999;
+
+  const handleSaveDealToCRM = () => {
+    const newRecord: ClientRecord = {
+      id: invoiceNumber,
+      clientName: clientName.trim() || 'Client',
+      businessName: businessName.trim() || 'Business Firm',
+      clientPhone: clientPhone.trim(),
+      clientEmail: clientEmail.trim(),
+      clientAddress: clientAddress.trim(),
+      selectedPackage,
+      customPackageName: selectedPackage === 'website' ? '5-Page High-Conversion Business Website' : selectedPackage === 'webapp' ? 'Custom Web Application' : selectedPackage === 'android' ? 'Android Mobile App (Play Store)' : customPackageName,
+      dealAmount: grandTotal,
+      discountAmount: Number(discountAmount) || 0,
+      advancePaid: effectiveAdvance,
+      balanceRemaining: balanceRemaining,
+      deliveryDays,
+      invoiceNumber,
+      dealDate,
+      expiryDate: currentExpiryDate,
+      domainName: domainName.trim(),
+      selectedAddons,
+      projectStage,
+      isBalancePaid
+    };
+
+    const existingIdx = savedClients.findIndex(c => c.invoiceNumber === invoiceNumber || (c.clientName === clientName && c.businessName === businessName));
+    let updated: ClientRecord[] = [];
+    if (existingIdx >= 0) {
+      updated = [...savedClients];
+      updated[existingIdx] = newRecord;
+    } else {
+      updated = [newRecord, ...savedClients];
+    }
+
+    syncClientsToStorage(updated);
+    setSaveToast(true);
+    setTimeout(() => setSaveToast(false), 3000);
+  };
+
+  const handleCreateNewDeal = () => {
+    const randomId = 'SWTS-2026-' + Math.floor(100 + Math.random() * 900);
+    setInvoiceNumber(randomId);
+    setClientName('');
+    setBusinessName('');
+    setClientPhone('');
+    setClientEmail('');
+    setClientAddress('');
+    setDomainName('');
+    setSelectedPackage('website');
+    setDealAmount(1999);
+    setDiscountAmount(0);
+    setAdvancePaid(1000);
+    setDeliveryDays('24 Hours');
+    setSelectedAddons([]);
+    setDealDate(new Date().toISOString().split('T')[0]);
+    setIsBalancePaid(false);
+    setProjectStage('development');
+    setActiveTab('agreement');
+  };
+
+  const handleLoadClientIntoEditor = (c: ClientRecord) => {
+    setClientName(c.clientName);
+    setBusinessName(c.businessName);
+    setClientPhone(c.clientPhone);
+    setClientEmail(c.clientEmail);
+    setClientAddress(c.clientAddress);
+    setSelectedPackage(c.selectedPackage);
+    setCustomPackageName(c.customPackageName || 'Custom Solution');
+    setDealAmount(c.dealAmount);
+    setDiscountAmount(c.discountAmount || 0);
+    setAdvancePaid(c.advancePaid);
+    setDeliveryDays(c.deliveryDays);
+    setInvoiceNumber(c.invoiceNumber);
+    setDealDate(c.dealDate);
+    setDomainName(c.domainName);
+    setSelectedAddons(c.selectedAddons || []);
+    setProjectStage(c.projectStage || 'development');
+    setIsBalancePaid(c.isBalancePaid || false);
+    setActiveTab('agreement');
+  };
+
+  const handleDeleteClient = (inv: string) => {
+    if (confirm('Are you sure you want to remove this client record?')) {
+      const filtered = savedClients.filter(c => c.invoiceNumber !== inv);
+      syncClientsToStorage(filtered);
+    }
+  };
+
+  const handleToggleSettlement = (inv: string) => {
+    const updated = savedClients.map(c => {
+      if (c.invoiceNumber === inv) {
+        const nextStatus = !c.isBalancePaid;
+        return { ...c, isBalancePaid: nextStatus, balanceRemaining: nextStatus ? 0 : Math.max(0, c.dealAmount - c.advancePaid) };
+      }
+      return c;
+    });
+    syncClientsToStorage(updated);
+  };
+
+  const filteredClients = savedClients.filter(c => {
+    const q = crmSearchQuery.toLowerCase().trim();
+    const matchesQuery = !q ||
+      c.clientName.toLowerCase().includes(q) ||
+      c.businessName.toLowerCase().includes(q) ||
+      c.clientPhone.includes(q) ||
+      c.domainName.toLowerCase().includes(q) ||
+      c.invoiceNumber.toLowerCase().includes(q);
+
+    const matchesPackage = crmFilterPackage === 'all' || c.selectedPackage === crmFilterPackage;
+    const matchesStage = crmFilterStage === 'all' || c.projectStage === crmFilterStage;
+
+    return matchesQuery && matchesPackage && matchesStage;
+  });
 
   const handlePrint = () => {
     window.print();
   };
-  const [copiedLink, setCopiedLink] = useState(false);
 
   const getClientSignUrl = () => {
     const pkgTitle = selectedPackage === 'website' ? '5-Page High-Speed Website' : selectedPackage === 'webapp' ? 'Full-Stack Custom Web App' : selectedPackage === 'android' ? 'Android Mobile App (Play Store)' : customPackageName;
@@ -190,7 +433,7 @@ export default function PortalDealMaker() {
       dealAmount: grandTotal,
       originalAmount: subtotalBeforeDiscount,
       discountAmount: Number(discountAmount) || 0,
-      advancePaid,
+      advancePaid: effectiveAdvance,
       balanceRemaining,
       deliveryDays,
       invoiceNumber,
@@ -200,7 +443,7 @@ export default function PortalDealMaker() {
     try {
       const jsonStr = unescape(encodeURIComponent(JSON.stringify(payload)));
       const b64 = btoa(jsonStr);
-      const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'https://sw-tech-portfolio.swgayanmitraai27.workers.dev';
+      const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'https://swtechsolution.in';
       return origin + '/sign?d=' + b64;
     } catch (e) {
       return '';
@@ -210,8 +453,8 @@ export default function PortalDealMaker() {
   const copyClientSignLink = () => {
     const url = getClientSignUrl();
     navigator.clipboard.writeText(url);
-    setCopiedLink(true);
-    setTimeout(() => setCopiedLink(false), 3000);
+    setCopiedNotice(true);
+    setTimeout(() => setCopiedNotice(false), 3000);
   };
 
   const shareAgreementWhatsApp = () => {
@@ -231,7 +474,7 @@ export default function PortalDealMaker() {
       '• Package Amount: ₹' + subtotalBeforeDiscount + '\n' +
       (discountAmount > 0 ? ('• Special Discount: -₹' + discountAmount + '\n') : '') +
       '• Final Deal Value: ₹' + grandTotal + '\n' +
-      '• Advance Paid: ₹' + advancePaid + '\n' +
+      '• Advance Paid: ₹' + effectiveAdvance + '\n' +
       '• Balance on Completion: ₹' + balanceRemaining + '\n' +
       '• Pay via UPI: ' + upiId + '\n\n' +
       '*INCLUDED SERVICES (1 YEAR):*\n' +
@@ -247,13 +490,64 @@ export default function PortalDealMaker() {
     window.open('https://wa.me/91' + clientPhone + '?text=' + encodeURIComponent(text), '_blank');
   };
 
+  const sendHandoverKitWhatsApp = (c: ClientRecord) => {
+    const msg = '*OFFICIAL PROJECT HANDOVER & CREDENTIAL KIT*\n' +
+      '*From:* SW TECH SOLUTION (Ambedkar Nagar, UP)\n' +
+      '*Client:* ' + c.clientName + ' (' + c.businessName + ')\n' +
+      '*Project:* ' + c.customPackageName + '\n' +
+      '*Live Domain:* https://' + c.domainName + '\n' +
+      '----------------------------------------\n' +
+      'Dear ' + c.clientName + ', your software project has been successfully engineered, tested, and deployed live.\n\n' +
+      '*ADMIN ACCESS & CREDENTIALS:*\n' +
+      '• Admin URL: https://' + c.domainName + '/admin\n' +
+      '• Registered Email: ' + (c.clientEmail || ('admin@' + c.domainName)) + '\n' +
+      '• 1-Year Live Server Validity: Active until ' + c.expiryDate + '\n' +
+      '• 24/7 Priority Support Desk: +91 8303994616\n\n' +
+      '_All admin rights, source assets, and cloud configurations have been handed over._\n' +
+      'Thank you for trusting SW Tech Solution!';
+
+    window.open('https://wa.me/91' + c.clientPhone + '?text=' + encodeURIComponent(msg), '_blank');
+  };
+
+  const sendSettlementReceiptWhatsApp = (c: ClientRecord) => {
+    const msg = '✅ *OFFICIAL PAYMENT SETTLEMENT RECEIPT*\n' +
+      '*Issued By:* SW TECH SOLUTION (Garima Studio, UP)\n' +
+      '*Client:* ' + c.clientName + ' (' + c.businessName + ')\n' +
+      '*Invoice Ref:* ' + c.invoiceNumber + '\n' +
+      '*Domain:* ' + c.domainName + '\n' +
+      '----------------------------------------\n' +
+      '*Total Project Value:* ₹' + c.dealAmount + '\n' +
+      '*Payment Status:* FULLY SETTLED (100% PAID)\n' +
+      '*Balance Due:* ₹0.00\n' +
+      '*Verified Seal:* VERIFIED BY SW TECH SOLUTION\n\n' +
+      '_Thank you for your complete payment. Your annual support and server are active._';
+
+    window.open('https://wa.me/91' + c.clientPhone + '?text=' + encodeURIComponent(msg), '_blank');
+  };
+
+  const sendRenewalWhatsApp = (c: ClientRecord) => {
+    const msg = '🔔 *ANNUAL DOMAIN & HOSTING RENEWAL NOTICE*\n' +
+      '*From:* SW TECH SOLUTION (Ambedkar Nagar, UP)\n' +
+      '*Client:* ' + c.clientName + ' (' + c.businessName + ')\n' +
+      '*Domain:* ' + c.domainName + '\n' +
+      '*Scheduled Expiry Date:* ' + c.expiryDate + '\n' +
+      '----------------------------------------\n' +
+      'Dear ' + c.clientName + ', your 1-Year Cloud Server, Domain Registration, and Business Email bundle is due for renewal.\n\n' +
+      '*Annual Renewal Bundle Fee: ₹3,999/-*\n' +
+      '*Pay via UPI:* ' + upiId + '\n\n' +
+      'To ensure uninterrupted uptime of your website, please confirm renewal.\n' +
+      'Helpline / WhatsApp: +91 8303994616';
+
+    window.open('https://wa.me/91' + c.clientPhone + '?text=' + encodeURIComponent(msg), '_blank');
+  };
+
   const copyRenewalNotice = () => {
     const renewalText = '*ANNUAL DOMAIN & HOSTING RENEWAL NOTICE*\n' +
       '*From:* SW TECH SOLUTION (Ambedkarnagar, UP)\n' +
       '*Client:* ' + clientName + ' (' + businessName + ')\n' +
       '*Website/Domain:* ' + domainName + '\n' +
       '----------------------------------------\n' +
-      'Dear Client, your 1-Year Cloud Hosting, Domain & Business Email cycle is scheduled for renewal.\n\n' +
+      'Dear Client, your 1-Year Cloud Hosting, Domain & Business Email cycle is scheduled for renewal on ' + currentExpiryDate + '.\n\n' +
       '*RENEWAL PACKAGE DETAILS:*\n' +
       '1. 1 Year Domain Extension (.com/.in): ₹999\n' +
       '2. 1 Year High-Speed Cloud Server Hosting: ₹1,499\n' +
@@ -268,6 +562,14 @@ export default function PortalDealMaker() {
     navigator.clipboard.writeText(renewalText);
     setCopiedNotice(true);
     setTimeout(() => setCopiedNotice(false), 3000);
+  };
+
+  const handleExportCRM = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(savedClients, null, 2));
+    const dlAnchor = document.createElement('a');
+    dlAnchor.setAttribute("href", dataStr);
+    dlAnchor.setAttribute("download", 'SW_Tech_Clients_Backup_' + (new Date().toISOString().split('T')[0]) + '.json');
+    dlAnchor.click();
   };
 
   if (!isAuthenticated) {
@@ -324,40 +626,56 @@ export default function PortalDealMaker() {
           <div className="flex items-center bg-slate-950 p-1.5 rounded-2xl border border-white/10 overflow-x-auto max-w-full">
             <button
               onClick={() => setActiveTab('agreement')}
-              className={'flex items-center space-x-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ' + (activeTab === 'agreement' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-white')}
+              className={'flex items-center space-x-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ' + (activeTab === 'agreement' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-white')}
             >
-              <FileText size={16} />
+              <FileText size={15} />
               <span>Deal Agreement</span>
             </button>
             <button
-              onClick={() => setActiveTab('invoice')}
-              className={'flex items-center space-x-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ' + (activeTab === 'invoice' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-white')}
+              onClick={() => setActiveTab('crm')}
+              className={'flex items-center space-x-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ' + (activeTab === 'crm' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-white')}
             >
-              <CreditCard size={16} />
+              <Users size={15} />
+              <span>Clients & Expiry</span>
+              <span className="ml-1 px-1.5 py-0.5 rounded-full bg-slate-800 text-[10px] font-bold text-orange-400 border border-white/10">{savedClients.length}</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('invoice')}
+              className={'flex items-center space-x-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ' + (activeTab === 'invoice' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-white')}
+            >
+              <CreditCard size={15} />
               <span>Official Invoice</span>
             </button>
             <button
               onClick={() => setActiveTab('renewal')}
-              className={'flex items-center space-x-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ' + (activeTab === 'renewal' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-white')}
+              className={'flex items-center space-x-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ' + (activeTab === 'renewal' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-white')}
             >
-              <RefreshCw size={16} />
+              <RefreshCw size={15} />
               <span>Annual Renewals</span>
             </button>
             <button
               onClick={() => setActiveTab('addons')}
-              className={'flex items-center space-x-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ' + (activeTab === 'addons' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-white')}
+              className={'flex items-center space-x-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ' + (activeTab === 'addons' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-white')}
             >
-              <PlusCircle size={16} />
+              <PlusCircle size={15} />
               <span>Extra Add-ons</span>
             </button>
           </div>
 
           <div className="flex items-center space-x-2">
             <button
-              onClick={handlePrint}
-              className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-white text-slate-950 text-sm font-bold hover:bg-slate-200 transition-colors shadow-md"
+              onClick={handleCreateNewDeal}
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all border border-white/10"
+              title="Create Fresh Deal"
             >
-              <Printer size={16} />
+              <PlusCircle size={14} className="text-orange-400" />
+              <span>New Deal</span>
+            </button>
+            <button
+              onClick={handlePrint}
+              className="flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-white text-slate-950 text-xs font-bold hover:bg-slate-200 transition-colors shadow-md"
+            >
+              <Printer size={14} />
               <span>Print / PDF</span>
             </button>
             <button
@@ -370,53 +688,91 @@ export default function PortalDealMaker() {
               className="p-2 rounded-xl bg-slate-800 text-slate-400 hover:text-rose-400 hover:bg-slate-700 transition-colors"
               title="Lock Portal"
             >
-              <Unlock size={18} />
+              <Unlock size={16} />
             </button>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-8">
-        
-        {/* CLIENT INPUTS */}
-        <div className="print:hidden mb-8 p-6 rounded-3xl bg-slate-900/60 border border-white/10 backdrop-blur-xl">
-          <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <h3 className="text-lg font-serif font-bold text-white flex items-center">
-              <Sparkles className="text-orange-400 mr-2" size={18} /> Client & Commercial Inputs
-            </h3>
-            <span className="text-xs text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20 font-medium">
-              Live Auto-Sync
-            </span>
-          </div>
+      {/* TOAST NOTIFICATION */}
+      <AnimatePresence>
+        {saveToast && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-20 right-6 z-50 bg-green-600 text-white px-4 py-2.5 rounded-2xl shadow-2xl flex items-center space-x-2 font-bold text-xs"
+          >
+            <CheckCircle2 size={16} />
+            <span>Deal Saved in Client Database & Expiry Tracker!</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-            <div>
-              <label className="block text-slate-400 text-xs mb-1">Client Full Name</label>
-              <input
-                type="text"
-                value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:border-orange-500 focus:outline-none"
-              />
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-6">
+        
+        {/* CLIENT INPUTS (AGREEMENT TAB) */}
+        {activeTab === 'agreement' && (
+          <div className="print:hidden mb-8 p-6 rounded-3xl bg-slate-900/60 border border-white/10 backdrop-blur-xl">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+              <h3 className="text-lg font-serif font-bold text-white flex items-center">
+                <Sparkles className="text-orange-400 mr-2" size={18} /> Client & Commercial Inputs
+              </h3>
+              
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-slate-400 font-bold">Stage:</span>
+                  <select
+                    value={projectStage}
+                    onChange={(e: any) => setProjectStage(e.target.value)}
+                    className="px-2.5 py-1 rounded-xl bg-slate-950 border border-white/10 text-xs font-bold text-orange-400 focus:outline-none"
+                  >
+                    <option value="development">⏳ In Development</option>
+                    <option value="testing">🧪 Testing & QA</option>
+                    <option value="delivered">🚀 Delivered & Live</option>
+                    <option value="amc">🛡️ Active AMC</option>
+                  </select>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleSaveDealToCRM}
+                  className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold text-xs shadow-md transition-all"
+                >
+                  <Check size={14} />
+                  <span>Save Deal in CRM</span>
+                </button>
+              </div>
             </div>
-            <div>
-              <label className="block text-slate-400 text-xs mb-1">Business / Firm Name</label>
-              <input
-                type="text"
-                value={businessName}
-                onChange={(e) => setBusinessName(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:border-orange-500 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-slate-400 text-xs mb-1">Client Phone (WhatsApp)</label>
-              <input
-                type="text"
-                value={clientPhone}
-                onChange={(e) => setClientPhone(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:border-orange-500 focus:outline-none"
-              />
-            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+              <div>
+                <label className="block text-slate-400 text-xs mb-1">Client Full Name</label>
+                <input
+                  type="text"
+                  value={clientName}
+                  onChange={(e) => setClientName(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:border-orange-500 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-slate-400 text-xs mb-1">Business / Firm Name</label>
+                <input
+                  type="text"
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:border-orange-500 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-slate-400 text-xs mb-1">Client Phone (WhatsApp)</label>
+                <input
+                  type="text"
+                  value={clientPhone}
+                  onChange={(e) => setClientPhone(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white focus:border-orange-500 focus:outline-none"
+                />
+              </div>
             <div>
               <label className="block text-slate-400 text-xs mb-1">Target Domain (.com/.in)</label>
               <input
@@ -481,6 +837,7 @@ export default function PortalDealMaker() {
             </div>
           </div>
         </div>
+        )}
         {/* TAB 1: DEAL AGREEMENT */}
         {activeTab === 'agreement' && (
           <div className="space-y-6">
@@ -496,7 +853,7 @@ export default function PortalDealMaker() {
                   className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all shadow border border-white/10"
                 >
                   <Copy size={14} />
-                  <span>{copiedLink ? 'Sign Link Copied!' : 'Copy Client Sign Link'}</span>
+                  <span>{copiedNotice ? 'Sign Link Copied!' : 'Copy Client Sign Link'}</span>
                 </button>
                 <button
                   onClick={shareAgreementWhatsApp}
@@ -702,6 +1059,281 @@ export default function PortalDealMaker() {
               </div>
 
             </div>
+          </div>
+        )}
+
+        {/* TAB: CLIENT RECORDS & 1-YEAR EXPIRY CRM */}
+        {activeTab === 'crm' && (
+          <div className="space-y-6">
+            
+            {/* TOP ANALYTICS DASHBOARD */}
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+              <div className="p-4 rounded-3xl bg-slate-900 border border-white/10 shadow-xl">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Booked Deals</p>
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-2xl font-serif font-black text-white">{totalDealsCount}</span>
+                  <div className="p-2 rounded-xl bg-orange-500/20 text-orange-400"><FileText size={18} /></div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-3xl bg-slate-900 border border-white/10 shadow-xl">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Gross Booked Value</p>
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-2xl font-serif font-black text-white">₹{totalGrossRevenue.toLocaleString()}</span>
+                  <div className="p-2 rounded-xl bg-blue-500/20 text-blue-400"><DollarSign size={18} /></div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-3xl bg-slate-900 border border-white/10 shadow-xl">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Advance Received</p>
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-2xl font-serif font-black text-green-400">₹{totalAdvanceCollected.toLocaleString()}</span>
+                  <div className="p-2 rounded-xl bg-green-500/20 text-green-400"><CheckCircle2 size={18} /></div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-3xl bg-slate-900 border border-white/10 shadow-xl">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Pending Balance</p>
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-2xl font-serif font-black text-orange-400">₹{totalPendingBalance.toLocaleString()}</span>
+                  <div className="p-2 rounded-xl bg-orange-500/20 text-orange-400"><AlertCircle size={18} /></div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-3xl bg-slate-900 border border-white/10 shadow-xl col-span-2 lg:col-span-1">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Annual ARR Pipeline</p>
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-2xl font-serif font-black text-purple-400">₹{totalAnnualRenewalsPipeline.toLocaleString()}</span>
+                  <div className="p-2 rounded-xl bg-purple-500/20 text-purple-400"><RefreshCw size={18} /></div>
+                </div>
+              </div>
+            </div>
+
+            {/* SEARCH & FILTER CONTROLS */}
+            <div className="p-4 rounded-3xl bg-slate-900 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
+              <div className="relative w-full md:w-80">
+                <Search size={16} className="absolute left-3.5 top-3 text-slate-400" />
+                <input
+                  type="text"
+                  value={crmSearchQuery}
+                  onChange={(e) => setCrmSearchQuery(e.target.value)}
+                  placeholder="Search name, phone, domain, ref..."
+                  className="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-orange-500"
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                <select
+                  value={crmFilterPackage}
+                  onChange={(e) => setCrmFilterPackage(e.target.value)}
+                  className="px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-slate-300 focus:outline-none"
+                >
+                  <option value="all">All Plans (Website, App, Android)</option>
+                  <option value="website">5-Page Website (24h)</option>
+                  <option value="webapp">Custom Web App (7d)</option>
+                  <option value="android">Android App (30d)</option>
+                </select>
+
+                <select
+                  value={crmFilterStage}
+                  onChange={(e) => setCrmFilterStage(e.target.value)}
+                  className="px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-slate-300 focus:outline-none"
+                >
+                  <option value="all">All Stages</option>
+                  <option value="development">⏳ In Development</option>
+                  <option value="testing">🧪 Testing & QA</option>
+                  <option value="delivered">🚀 Delivered & Live</option>
+                  <option value="amc">🛡️ Active AMC</option>
+                </select>
+
+                <button
+                  type="button"
+                  onClick={handleExportCRM}
+                  className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all border border-white/10"
+                  title="Download Backup"
+                >
+                  <Download size={14} />
+                  <span>Export Backup</span>
+                </button>
+              </div>
+            </div>
+
+            {/* CLIENTS RECORD LIST */}
+            {filteredClients.length === 0 ? (
+              <div className="p-12 text-center rounded-3xl bg-slate-900/50 border border-dashed border-white/10">
+                <p className="text-slate-400 text-sm">No client records found matching your search.</p>
+                <button
+                  type="button"
+                  onClick={handleCreateNewDeal}
+                  className="mt-4 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs"
+                >
+                  + Create First Deal
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {filteredClients.map((client) => {
+                  const now = Date.now();
+                  const expTime = new Date(client.expiryDate).getTime();
+                  const daysLeft = Math.ceil((expTime - now) / (1000 * 60 * 60 * 24));
+                  const isExpiringSoon = daysLeft <= 30 && daysLeft > 0;
+                  const isExpired = daysLeft <= 0;
+
+                  return (
+                    <div
+                      key={client.id}
+                      className="p-5 rounded-3xl bg-slate-900 border border-white/10 hover:border-orange-500/40 transition-all shadow-xl space-y-4 relative group"
+                    >
+                      {/* HEADER: NAME, BUSINESS, EXPIRY BADGE */}
+                      <div className="flex justify-between items-start gap-2">
+                        <div>
+                          <div className="flex items-center space-x-2">
+                            <span className="font-serif font-bold text-base text-white">{client.clientName}</span>
+                            <span className="text-xs text-orange-400 font-semibold">({client.businessName})</span>
+                          </div>
+                          <p className="text-xs text-slate-400 mt-0.5 flex items-center space-x-2">
+                            <span>Ph: +91 {client.clientPhone}</span>
+                            <span>•</span>
+                            <span className="font-mono text-slate-500">{client.invoiceNumber}</span>
+                          </p>
+                        </div>
+
+                        {/* RENEWAL COUNTDOWN BADGE */}
+                        <div className="text-right shrink-0">
+                          {isExpired ? (
+                            <span className="px-2.5 py-1 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-400 text-[10px] font-bold animate-pulse">
+                              🔴 Expired / Renewal Due
+                            </span>
+                          ) : isExpiringSoon ? (
+                            <span className="px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-bold">
+                              🟡 Expiring ({daysLeft}d left)
+                            </span>
+                          ) : (
+                            <span className="px-2.5 py-1 rounded-full bg-green-500/20 border border-green-500/40 text-green-400 text-[10px] font-bold">
+                              🟢 Active ({daysLeft}d left)
+                            </span>
+                          )}
+                          <p className="text-[10px] text-slate-500 mt-1">Renews: {client.expiryDate}</p>
+                        </div>
+                      </div>
+
+                      {/* PLAN & STAGE BADGES */}
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        <span className="px-2.5 py-1 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 font-medium">
+                          {client.selectedPackage === 'website' ? '🌐 Website (24h Delivery)' : client.selectedPackage === 'webapp' ? '💻 Web App (7d Delivery)' : client.selectedPackage === 'android' ? '📱 Android App (Play Store 30d)' : client.customPackageName}
+                        </span>
+
+                        <span className={'px-2.5 py-1 rounded-xl font-bold border text-[11px] ' + (
+                          client.projectStage === 'delivered' ? 'bg-green-500/10 text-green-400 border-green-500/30' :
+                          client.projectStage === 'testing' ? 'bg-blue-500/10 text-blue-400 border-blue-500/30' :
+                          client.projectStage === 'amc' ? 'bg-purple-500/10 text-purple-400 border-purple-500/30' :
+                          'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                        )}>
+                          {client.projectStage === 'delivered' ? '🚀 Delivered & Live' :
+                           client.projectStage === 'testing' ? '🧪 Testing & QA' :
+                           client.projectStage === 'amc' ? '🛡️ Active AMC' :
+                           '⏳ In Development'}
+                        </span>
+
+                        {client.domainName && (
+                          <a
+                            href={'https://' + client.domainName}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-2.5 py-1 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 hover:text-orange-300 flex items-center space-x-1"
+                          >
+                            <span>{client.domainName}</span>
+                            <ExternalLink size={10} />
+                          </a>
+                        )}
+                      </div>
+
+                      {/* COMMERCIAL BREAKDOWN */}
+                      <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 grid grid-cols-3 gap-2 text-center text-xs">
+                        <div>
+                          <p className="text-[10px] text-slate-400">Total Value</p>
+                          <p className="font-bold text-white mt-0.5">₹{client.dealAmount}</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] text-slate-400">Advance Paid</p>
+                          <p className="font-bold text-green-400 mt-0.5">₹{client.advancePaid}</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] text-slate-400">Balance Status</p>
+                          <p className={'font-bold mt-0.5 ' + (client.isBalancePaid ? 'text-green-400' : 'text-orange-400')}>
+                            {client.isBalancePaid ? '✓ ₹0 Paid' : ('₹' + client.balanceRemaining + ' Due')}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* ACTION BUTTONS */}
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/80">
+                        <div className="flex items-center space-x-1.5">
+                          <button
+                            type="button"
+                            onClick={() => handleLoadClientIntoEditor(client)}
+                            className="px-3 py-1.5 rounded-xl bg-orange-500/20 hover:bg-orange-500 text-orange-400 hover:text-white text-xs font-bold transition-all border border-orange-500/30"
+                            title="Load client into editor"
+                          >
+                            Load in Editor
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleToggleSettlement(client.invoiceNumber)}
+                            className={'px-2.5 py-1.5 rounded-xl text-xs font-bold border transition-all ' + (client.isBalancePaid ? 'bg-slate-800 text-slate-400 border-slate-700' : 'bg-green-600/20 text-green-400 border-green-500/30 hover:bg-green-600 hover:text-white')}
+                            title="Toggle Full Payment Settlement"
+                          >
+                            {client.isBalancePaid ? 'Mark Unpaid' : 'Mark Full Paid'}
+                          </button>
+                        </div>
+
+                        <div className="flex items-center space-x-1.5">
+                          <button
+                            type="button"
+                            onClick={() => sendRenewalWhatsApp(client)}
+                            className="p-2 rounded-xl bg-purple-500/20 hover:bg-purple-600 text-purple-300 hover:text-white transition-all"
+                            title="Send WhatsApp Renewal Notice"
+                          >
+                            <RefreshCw size={14} />
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => sendHandoverKitWhatsApp(client)}
+                            className="p-2 rounded-xl bg-blue-500/20 hover:bg-blue-600 text-blue-300 hover:text-white transition-all"
+                            title="Send Handover Credentials Kit on WhatsApp"
+                          >
+                            <Key size={14} />
+                          </button>
+
+                          {client.isBalancePaid && (
+                            <button
+                              type="button"
+                              onClick={() => sendSettlementReceiptWhatsApp(client)}
+                              className="p-2 rounded-xl bg-green-500/20 hover:bg-green-600 text-green-300 hover:text-white transition-all"
+                              title="Send WhatsApp Full Paid Receipt"
+                            >
+                              <BadgeCheck size={14} />
+                            </button>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteClient(client.invoiceNumber)}
+                            className="p-2 rounded-xl bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition-all"
+                            title="Delete Record"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
           </div>
         )}
         {/* TAB 2: OFFICIAL INVOICE */}
