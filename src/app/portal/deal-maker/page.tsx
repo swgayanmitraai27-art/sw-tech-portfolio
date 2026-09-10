@@ -108,6 +108,8 @@ export default function PortalDealMaker() {
   const [crmSearchQuery, setCrmSearchQuery] = useState('');
   const [crmFilterPackage, setCrmFilterPackage] = useState('all');
   const [crmFilterStage, setCrmFilterStage] = useState('all');
+  const [isCloudSyncing, setIsCloudSyncing] = useState(false);
+  const [isCloudConnected, setIsCloudConnected] = useState(true);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -123,63 +125,84 @@ export default function PortalDealMaker() {
         } catch (e) {
           console.error('Error reading CRM storage', e);
         }
-      } else {
-        const sample: ClientRecord[] = [
-          {
-            id: 'SWTS-2026-849',
-            clientName: 'Rahul Sharma',
-            businessName: 'Sharma Sweets',
-            clientPhone: '9876543210',
-            clientEmail: 'sharma.business@gmail.com',
-            clientAddress: 'Shop No. 12, Main Market, Ambedkar Nagar, UP',
-            selectedPackage: 'website',
-            customPackageName: '5-Page High-Conversion Business Website',
-            dealAmount: 1999,
-            discountAmount: 0,
-            advancePaid: 1000,
-            balanceRemaining: 999,
-            deliveryDays: '24 Hours',
-            invoiceNumber: 'SWTS-2026-849',
-            dealDate: '2026-09-10',
-            expiryDate: '2027-09-10',
-            domainName: 'sharmasweets.in',
-            selectedAddons: [],
-            projectStage: 'development',
-            isBalancePaid: false
-          },
-          {
-            id: 'SWTS-2026-722',
-            clientName: 'Amit Verma',
-            businessName: 'Verma Coaching Classes',
-            clientPhone: '8877665544',
-            clientEmail: 'verma.coaching@gmail.com',
-            clientAddress: 'Neori Bajar, Ramnagar Road, Ambedkar Nagar',
-            selectedPackage: 'webapp',
-            customPackageName: 'Student Portal & Exam System',
-            dealAmount: 4499,
-            discountAmount: 500,
-            advancePaid: 2000,
-            balanceRemaining: 1999,
-            deliveryDays: '7 Days (With Full Testing)',
-            invoiceNumber: 'SWTS-2026-722',
-            dealDate: '2026-08-15',
-            expiryDate: '2027-08-15',
-            domainName: 'vermacoaching.com',
-            selectedAddons: ['whatsapp_bot'],
-            projectStage: 'delivered',
-            isBalancePaid: true
-          }
-        ];
-        setSavedClients(sample);
-        localStorage.setItem('swtech_crm_clients', JSON.stringify(sample));
       }
+
+      // Fetch live cloud records from Cloudflare D1
+      fetch('/api/crm')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.success && Array.isArray(data.clients)) {
+            if (data.clients.length > 0) {
+              const mapped: ClientRecord[] = data.clients.map((c: any) => ({
+                id: c.id,
+                clientName: c.clientName || '',
+                businessName: c.businessName || '',
+                clientPhone: c.clientPhone || '',
+                clientEmail: c.clientEmail || '',
+                clientAddress: c.clientAddress || '',
+                selectedPackage: c.selectedPackage || 'website',
+                customPackageName: c.customPackageName || '',
+                dealAmount: Number(c.dealAmount) || 0,
+                originalAmount: Number(c.originalAmount) || Number(c.dealAmount) || 0,
+                discountAmount: Number(c.discountAmount) || 0,
+                advancePaid: Number(c.advancePaid) || 0,
+                balanceRemaining: Number(c.balanceRemaining) || 0,
+                deliveryDays: c.deliveryDays || '',
+                invoiceNumber: c.invoiceNumber || c.id,
+                dealDate: c.dealDate || '',
+                expiryDate: c.expiryDate || '',
+                domainName: c.domainName || '',
+                selectedAddons: Array.isArray(c.addons) ? c.addons : [],
+                projectStage: c.projectStage || 'development',
+                isBalancePaid: Boolean(c.settled)
+              }));
+              setSavedClients(mapped);
+              localStorage.setItem('swtech_crm_clients', JSON.stringify(mapped));
+            } else if (rawClients) {
+              try {
+                const parsed = JSON.parse(rawClients);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                  parsed.forEach((rec: ClientRecord) => {
+                    fetch('/api/crm', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(rec)
+                    }).catch(console.error);
+                  });
+                }
+              } catch (e) {}
+            }
+            setIsCloudConnected(true);
+          }
+        })
+        .catch(err => {
+          console.warn('Cloudflare D1 fetch error, using local storage cache', err);
+          setIsCloudConnected(false);
+        });
     }
   }, []);
 
-  const syncClientsToStorage = (newList: ClientRecord[]) => {
+  const syncClientsToStorage = async (newList: ClientRecord[], recordToSave?: ClientRecord) => {
     setSavedClients(newList);
     if (typeof window !== 'undefined') {
       localStorage.setItem('swtech_crm_clients', JSON.stringify(newList));
+    }
+    if (recordToSave) {
+      try {
+        setIsCloudSyncing(true);
+        await fetch('/api/crm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...recordToSave,
+            settled: recordToSave.isBalancePaid
+          })
+        });
+      } catch (err) {
+        console.error('Cloudflare D1 sync error:', err);
+      } finally {
+        setIsCloudSyncing(false);
+      }
     }
   };
 
@@ -338,7 +361,7 @@ export default function PortalDealMaker() {
       updated = [newRecord, ...savedClients];
     }
 
-    syncClientsToStorage(updated);
+    syncClientsToStorage(updated, newRecord);
     setSaveToast(true);
     setTimeout(() => setSaveToast(false), 3000);
   };
@@ -385,22 +408,33 @@ export default function PortalDealMaker() {
     setActiveTab('agreement');
   };
 
-  const handleDeleteClient = (inv: string) => {
-    if (confirm('Are you sure you want to remove this client record?')) {
-      const filtered = savedClients.filter(c => c.invoiceNumber !== inv);
+  const handleDeleteClient = async (inv: string) => {
+    if (confirm('Are you sure you want to remove this client record from Cloud DB & CRM?')) {
+      const filtered = savedClients.filter(c => c.invoiceNumber !== inv && c.id !== inv);
       syncClientsToStorage(filtered);
+      try {
+        setIsCloudSyncing(true);
+        await fetch(`/api/crm?id=${encodeURIComponent(inv)}`, { method: 'DELETE' });
+      } catch (err) {
+        console.error('Cloudflare D1 delete error:', err);
+      } finally {
+        setIsCloudSyncing(false);
+      }
     }
   };
 
   const handleToggleSettlement = (inv: string) => {
+    let modifiedRecord: ClientRecord | undefined;
     const updated = savedClients.map(c => {
-      if (c.invoiceNumber === inv) {
+      if (c.invoiceNumber === inv || c.id === inv) {
         const nextStatus = !c.isBalancePaid;
-        return { ...c, isBalancePaid: nextStatus, balanceRemaining: nextStatus ? 0 : Math.max(0, c.dealAmount - c.advancePaid) };
+        const rec = { ...c, isBalancePaid: nextStatus, balanceRemaining: nextStatus ? 0 : Math.max(0, c.dealAmount - c.advancePaid) };
+        modifiedRecord = rec;
+        return rec;
       }
       return c;
     });
-    syncClientsToStorage(updated);
+    syncClientsToStorage(updated, modifiedRecord);
   };
 
   const filteredClients = savedClients.filter(c => {
@@ -617,8 +651,14 @@ export default function PortalDealMaker() {
           <div className="flex items-center space-x-3">
             <div className="p-2 rounded-xl bg-orange-500 text-white font-bold">SW</div>
             <div>
-              <h1 className="text-lg font-bold font-serif text-white">SW Tech Deal & Agreement Suite</h1>
-              <p className="text-xs text-slate-400">Garima Studio, Neori Bajar, Ambedkarnagar UP  +91 8303994616</p>
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="text-lg font-bold font-serif text-white">SW Tech Deal & Agreement Suite</h1>
+                <span className={`inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${isCloudSyncing ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' : isCloudConnected ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-800 text-slate-400 border-white/10'}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${isCloudSyncing ? 'bg-amber-400 animate-ping' : isCloudConnected ? 'bg-emerald-400 animate-pulse' : 'bg-slate-400'}`}></span>
+                  <span>{isCloudSyncing ? 'Cloud Syncing...' : isCloudConnected ? 'Cloudflare D1 Live' : 'Offline Cache'}</span>
+                </span>
+              </div>
+              <p className="text-xs text-slate-400">Garima Studio, Neori Bajar, Ambedkarnagar UP • +91 8303994616</p>
             </div>
           </div>
 
