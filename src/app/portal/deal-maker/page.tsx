@@ -132,46 +132,31 @@ export default function PortalDealMaker() {
         .then(res => res.json())
         .then(data => {
           if (data && data.success && Array.isArray(data.clients)) {
-            if (data.clients.length > 0) {
-              const mapped: ClientRecord[] = data.clients.map((c: any) => ({
-                id: c.id,
-                clientName: c.clientName || '',
-                businessName: c.businessName || '',
-                clientPhone: c.clientPhone || '',
-                clientEmail: c.clientEmail || '',
-                clientAddress: c.clientAddress || '',
-                selectedPackage: c.selectedPackage || 'website',
-                customPackageName: c.customPackageName || '',
-                dealAmount: Number(c.dealAmount) || 0,
-                originalAmount: Number(c.originalAmount) || Number(c.dealAmount) || 0,
-                discountAmount: Number(c.discountAmount) || 0,
-                advancePaid: Number(c.advancePaid) || 0,
-                balanceRemaining: Number(c.balanceRemaining) || 0,
-                deliveryDays: c.deliveryDays || '',
-                invoiceNumber: c.invoiceNumber || c.id,
-                dealDate: c.dealDate || '',
-                expiryDate: c.expiryDate || '',
-                domainName: c.domainName || '',
-                selectedAddons: Array.isArray(c.addons) ? c.addons : [],
-                projectStage: c.projectStage || 'development',
-                isBalancePaid: Boolean(c.settled)
-              }));
-              setSavedClients(mapped);
-              localStorage.setItem('swtech_crm_clients', JSON.stringify(mapped));
-            } else if (rawClients) {
-              try {
-                const parsed = JSON.parse(rawClients);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                  parsed.forEach((rec: ClientRecord) => {
-                    fetch('/api/crm', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify(rec)
-                    }).catch(console.error);
-                  });
-                }
-              } catch (e) {}
-            }
+            const mapped: ClientRecord[] = data.clients.map((c: any) => ({
+              id: c.id,
+              clientName: c.clientName || '',
+              businessName: c.businessName || '',
+              clientPhone: c.clientPhone || '',
+              clientEmail: c.clientEmail || '',
+              clientAddress: c.clientAddress || '',
+              selectedPackage: c.selectedPackage || 'website',
+              customPackageName: c.customPackageName || '',
+              dealAmount: Number(c.dealAmount) || 0,
+              originalAmount: Number(c.originalAmount) || Number(c.dealAmount) || 0,
+              discountAmount: Number(c.discountAmount) || 0,
+              advancePaid: Number(c.advancePaid) || 0,
+              balanceRemaining: Number(c.balanceRemaining) || 0,
+              deliveryDays: c.deliveryDays || '',
+              invoiceNumber: c.invoiceNumber || c.id,
+              dealDate: c.dealDate || '',
+              expiryDate: c.expiryDate || '',
+              domainName: c.domainName || '',
+              selectedAddons: Array.isArray(c.addons) ? c.addons : [],
+              projectStage: c.projectStage || 'development',
+              isBalancePaid: Boolean(c.settled)
+            }));
+            setSavedClients(mapped);
+            localStorage.setItem('swtech_crm_clients', JSON.stringify(mapped));
             setIsCloudConnected(true);
           }
         })

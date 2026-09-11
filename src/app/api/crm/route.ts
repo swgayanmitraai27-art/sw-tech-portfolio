@@ -146,7 +146,7 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ success: false, error: 'ID is required' }, { status: 400 });
     }
 
-    await queryD1('DELETE FROM clients WHERE id = ?', [id]);
+    await queryD1('DELETE FROM clients WHERE id = ? OR invoiceNumber = ?', [id, id]);
     return NextResponse.json({ success: true, message: 'Client deleted from Cloudflare D1' });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
